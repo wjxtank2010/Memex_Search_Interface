@@ -1,0 +1,277 @@
+<DOC>
+<DOCNO>0B8AAE96C283D946B6BBCF6959F04F22C13E83306F88AF4687F4D5E390FC9221</DOCNO>
+<HTML>
+<BODY>
+<url>https://shreveport.craigslist.org/cas/5609752887.html</url>
+<name>name: NULL</name>
+<age>age: 30</age>
+<location>location: Shreveport</location>
+<phone>phone: 5609752887</phone>
+<email>email: NULL</email>
+<ethnicity>ethnicity: NULL</ethnicity>
+<height>height: 154,177</height>
+<weight>weight: NULL</weight>
+<hair_color>hair_color: green</hair_color>
+<eye_color>eye_color: green</eye_color>
+<raw_content><!DOCTYPE html>
+<html class="no-js">
+<head>
+<title>looking for some fun late tonight you host - m4m</title>
+	<link rel="canonical" href="http://shreveport.craigslist.org/cas/5609752887.html">
+	<meta name="description" content="Thirty year old white guy. Five foot ten. Two twenty. Brown hair and green eyes. Full beard and 8 uncut. Looking for a bottom guy to play with tonight. Need this nut sucked out of me. Prefer white...">
+	<meta name="robots" content="noarchive,nofollow,unavailable_after:Wednesday, 13-Jul-16 12:36:02 CDT">
+	<meta name="twitter:card" content="preview">
+	<meta property="og:description" content="Thirty year old white guy. Five foot ten. Two twenty. Brown hair and green eyes. Full beard and 8 uncut. Looking for a bottom guy to play with tonight. Need this nut sucked out of me. Prefer white...">
+	<meta property="og:site_name" content="craigslist">
+	<meta property="og:title" content="looking for some fun late tonight you host - m4m">
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="http://shreveport.craigslist.org/cas/5609752887.html">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link type="text/css" rel="stylesheet" media="all" href="//www.craigslist.org/styles/cl.css?v=a1714916751d26ee0ae47420332c611b">
+    <link type="text/css" rel="stylesheet" media="all" href="//www.craigslist.org/styles/postings.css?v=ad64a5391d5c7a35456a0a1cd8709f68">
+    
+    <!--[if lt IE 9]>
+<script src="//www.craigslist.org/js/html5shiv.min.js?v=096822b653643ed1af3136947e4ea79a" type="text/javascript" ></script>
+
+<script src="//www.craigslist.org/js/respond-fork.min.js?v=d7e1cb0d97ee0c0c9d84a7d4f1d03469" type="text/javascript" ></script>
+
+<![endif]-->
+<!--[if lte IE 7]>
+<script src="//www.craigslist.org/js/json2.min.js?v=178d4ad319e0e0b4a451b15e49b71bec" type="text/javascript" ></script>
+
+<![endif]-->
+</head>
+
+<body class="posting en">
+    <script type="text/javascript"><!--
+    function C(k){return(document.cookie.match('(^|; )'+k+'=([^;]*)')||0)[2]}
+    var pagetype, pagemode;
+    (function(){
+        var h = document.documentElement;
+        h.className = h.className.replace('no-js', 'js');
+        var b = document.body;
+        var bodyClassList = b.className.split(/\s+/);;
+        pagetype = bodyClassList[0]; // dangerous assumption
+        var fmt = C('cl_fmt');
+        if ( fmt === 'regular' || fmt === 'mobile' ) {
+            pagemode = fmt;
+        } else if (screen.width <= 480) {
+            pagemode = 'mobile';
+        } else {
+            pagemode = 'regular';
+        }
+        pagemode = pagemode === 'mobile' ? 'mobile' : 'desktop';
+        bodyClassList.push(pagemode);
+        if (C('hidesearch') === '1' && pagemode !== 'mobile') {
+            bodyClassList.push('hide-search');
+        }
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width > 1000) { bodyClassList.push('w1024'); }
+        if (typeof window.sectionBase !== 'undefined') {
+            var mode = (decodeURIComponent(C('cl_tocmode') || '').match(new RegExp(window.sectionBase + ':([^,]+)', 'i')) || {})[1] || window.defaultView;
+            if (mode) {
+                bodyClassList.push(mode);
+            }
+        }
+        b.className = bodyClassList.join(' ');
+    }());
+--></script>
+
+
+    <section id="pagecontainer">
+        <div class="bglogo"></div>
+        <header class="global-header">
+   <a class="header-logo" href="/">CL</a>
+
+    <nav class="breadcrumbs-container">
+
+<ul class="breadcrumbs">
+        <li class="crumb area">
+            <p>
+                    <a href="/">shreveport</a>
+
+                    <span class="breadcrumb-arrow">&gt;</span>
+            </p>
+        </li>
+
+
+        <li class="crumb section">
+            <p>
+                    <a href="/ppp">personals</a>
+
+                    <span class="breadcrumb-arrow">&gt;</span>
+            </p>
+        </li>
+
+        <li class="crumb category">
+            <p>
+                <a href="/cas">casual encounters</a>
+
+            </p>
+        </li>
+
+
+    <li class="crumb no-js">
+        <input type="submit" value="go">
+    </li>
+</ul>
+    </nav>
+
+<div class="userlinks">
+    <ul class="user-actions">
+        <li class="user post">
+            <a href="https://post.craigslist.org/c/shv">post</a>
+        </li>
+        <li class="user account">
+            <a href="https://accounts.craigslist.org/login/home">account</a>
+        </li>
+    </ul>
+    <ul class="user-favs-discards">
+        <li class="user">
+            <div class="favorites">
+                <a href="#" class="favlink"><span class="icon icon-star fav" aria-hidden="true"></span><span class="fav-number">0</span><span class="fav-label"> favorites</span></a>
+            </div>
+        </li>
+        <li class="user discards">
+            <div>
+                <span class="icon icon-trash red" aria-hidden="true"></span><span class="hidden_count linklike withmap"></span><span class="hidden_count linklike nomap"></span><span class="discards-label linklike"> hidden</span>
+            </div>
+        </li>
+    </ul>
+</div>
+</header>
+
+        <section class="body">
+            <header class="dateReplyBar">
+    
+        <script type="text/javascript"><!--
+var bestOf = "";
+var buttonPostingID = "5609752887";
+var isPreview = "";
+--></script>
+    
+
+<button class="reply_button js-only">reply <span class="envelope">&#9993;</span> <span class="phone">&#9742;</span></button>
+    <span class="replylink"><a id="replylink" href="/reply/shv/cas/5609752887">reply</a></span>
+
+<div class="returnemail js-only"></div>
+
+    <aside class="flags">
+    <a class="flaglink" data-flag="28" href="https://post.craigslist.org/flag?flagCode=28&amp;postingID=5609752887&amp;subareaid=0&amp;areaid=206&amp;cat=cas&amp;area=shv" title="flag as prohibited / spam / miscategorized"><span class="flag">x</span> <span class="flagtext">prohibited</span></a><sup>[<a href="http://www.craigslist.org/about/prohibited">?</a>]</sup>
+</aside>
+    <p id="display-date" class="postinginfo reveal">Posted: <time  class="timeago" datetime="2016-05-29T12:35:58-0500">2016-05-29 12:35pm</time></p>
+    <a href="#" id="printme">print</a>
+    <div class="prevnext js-only">
+    <a class="prev">&#9664;  prev </a>
+    <a class="backup" title="back to search">&#9650;</a>
+    <a class="next"> next &#9654; </a>
+</div>
+    
+</header>
+
+<h2 class="postingtitle">
+  <span class="icon icon-star" role="button">
+    <span class="screen-reader-text">favorite this post</span>
+  </span>
+  <span class="postingtitletext">
+    <span id="titletextonly">looking for some fun late tonight you host</span> - m4m<small> (Shreveport)</small>
+    <span class="js-only banish-unbanish">
+  <span class="banish" title="hide this posting" role="button">
+    <span class="icon icon-trash" aria-hidden="true"></span>
+    <span class="screen-reader-text">hide this posting</span>
+  </span>
+  <span class="unbanish" title="restore this posting" role="button">
+    <span class="icon icon-trash red" aria-hidden="true"></span>
+    <span class="screen-reader-text">restore this posting</span>
+  </span>
+</span>
+  </span>
+</h2>
+<section class="userbody">
+    
+
+    <div class="mapAndAttrs">
+        
+        <p class="attrgroup" style="margin-top:0px"><span class="personals_attrbubble personals_physical">body : <b>average</b></span> <span class="personals_attrbubble personals_physical">height : <b>  5'10" (177cm)</b></span> <span class="personals_attrbubble personals_situational">status : <b>single</b></span> <span class="personals_attrbubble personals_situational">hiv/hsv/hpv : <b>Neg</b></span></P><p class="attrgroup"><span>age: <b>30</b></span><br></p>
+        
+        <div class="no-mobile">
+            
+            <div id="printcontact"></div><p>
+            <div id="qrcode" data-location="http://shreveport.craigslist.org/cas/5609752887.html"></div>
+        </div>
+    </div>
+
+    <section id="postingbody">
+        Thirty year old white guy. Five foot ten. Two twenty. Brown hair and green eyes. Full beard and 8 uncut. Looking for a bottom guy to play with tonight. Need this nut sucked out of me. Prefer white guys closer to my age and smooth, but some hair isn't a deal breaker. You should be able to host. Looking to get some head and maybe return the favor. I am a top if it comes to that.
+    </section>
+
+
+    <ul class="notices"><li>do NOT contact me with unsolicited services or offers</li></ul>
+
+    <div class="postinginfos">
+        <p class="postinginfo">post id: 5609752887</p>
+        <p class="postinginfo reveal">posted: <time datetime="2016-05-29T12:35:58-0500">2016-05-29 12:35pm</time></p>
+        
+               <p class="postinginfo"><a href="https://accounts.craigslist.org/eaf?postingID=5609752887&amp;token=U2FsdGVkX18yMzU3NTIzNWne99ffUR1Jls2RTbwjgAtgpsiMcWzKzkYP5PdxT_KzCLCfBHzZhwLi1CuovVtCG3fX7bbZsbJv" class="tsb">email to friend</a></p>
+               <p class="postinginfo">
+                   <a class="bestof-link" data-flag="9" href="https://post.craigslist.org/flag?flagCode=9&amp;postingID=5609752887&amp;" title="nominate for best-of-CL">
+                     <span class="bestof-icon">&hearts; </span><span class="bestof-text">best of</span>
+                   </a> <sup>[<a href="http://www.craigslist.org/about/best-of-craigslist">?</a>]</sup>
+               </p>
+         
+    </div>
+    <div id="printpics"></div>
+
+</section>
+
+<div class="no-mobile">
+    
+</div>
+
+<div class="mobile-only">
+    
+</div>
+
+
+        </section>
+        <footer>
+    
+    <ul class="clfooter">
+        <li>&copy; 2016 <span class="desktop">craigslist</span><span class="mobile">CL</span></li>
+        <li><a href="//www.craigslist.org/about/help/">help</a></li>
+        <li><a href="//www.craigslist.org/about/scams">safety</a></li>
+        <li class="desktop"><a href="//www.craigslist.org/about/privacy.policy">privacy</a></li>
+        <li class="desktop"><a href="https://forums.craigslist.org/?forumID=8">feedback</a></li>
+        <li class="desktop"><a href="//www.craigslist.org/about/craigslist_is_hiring">cl jobs</a></li>
+        <li><a href="//www.craigslist.org/about/terms.of.use.en">terms</a></li>
+        <li><a href="//www.craigslist.org/about/">about</a></li>
+        <li class="fsel desktop linklike" data-mode="mobile">mobile</li>
+        <li class="fsel mobile linklike" data-mode="regular">desktop</li>
+    </ul>
+</footer>
+    </section>
+
+    
+        <script type="text/javascript"><!--
+var countOfTotalText = "image {count} of {total}";
+var imageHost = "//images.craigslist.org";
+var maptileBaseUrl = "//map{s}.craigslist.org/t08/{z}/{x}/{y}.png";
+var pID = "5609752887";
+--></script>
+    
+    <script src="//www.craigslist.org/js/general-concat.min.js?v=5048a1c462be4f4946627a3fb8ae20b0" type="text/javascript" ></script>
+
+    <script type="text/javascript"><!--
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = '//www.' + CL.url.baseDomain + '/static/localstorage.html?v=51a29e41f8e978141e4085ed4a77d170';
+        document.body.insertBefore(iframe, null);
+    --></script>
+    
+    <script src="//www.craigslist.org/js/postings-concat.min.js?v=7097fc71c5c8a0ea56af2aa10396501c" type="text/javascript" ></script>
+
+</body>
+</html></raw_content>
+</BODY>
+</HTML>
+</DOC>

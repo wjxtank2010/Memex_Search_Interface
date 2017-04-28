@@ -1,0 +1,1 @@
+{'query': {'bool': {'should': [], 'must': [{'match': {'raw_content': 'Brown'}}, {'range': {'age': {'gte': 26, 'lte': 33}}}, {'range': {'height': {'gte': 165, 'lte': 190}}}]}}, 'size': 500}
