@@ -7,7 +7,7 @@ from database import DBHandler
 def recoverSubtopic():
 
     subtopic_id = int(sys.argv[1])
-    atn_db  = DBHandler('./database/test.db')
+    atn_db  = DBHandler('./database/Memex.db')
     atn_db.cur.execute('UPDATE subtopic SET state=0 WHERE subtopic_id=?', [subtopic_id])
     atn_db.cur.execute(
         '''

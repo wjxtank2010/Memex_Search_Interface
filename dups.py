@@ -5,7 +5,7 @@ import cgi, sqlite3
 from database import DBHandler
 
 def dupsummary():
-    atn_db = DBHandler("./database/test.db")
+    atn_db = DBHandler("./database/Memex.db")
     fh = open('./view/nonrelevant.csv','w')
     atn_db.cur.execute('''
         SELECT filter_list.topic_id, filter_list.docno FROM filter_list, topic 

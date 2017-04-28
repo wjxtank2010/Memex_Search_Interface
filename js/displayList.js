@@ -1,4 +1,4 @@
-home_prefix = 'http://cs-sys-1.uis.georgetown.edu/~jw1498/Memex_Search_Interface/';
+home_prefix = 'http://cs-sys-1.uis.georgetown.edu/~jw1498/test/';
 
 $(document).ready(function() {
     //parent.logCurrentPage(location);

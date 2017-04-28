@@ -5,7 +5,7 @@ import sqlite3
 from database import DBHandler
 
 dh = open('subtopic_stat.xml','w')
-atn_db  = DBHandler("./database/test.db")
+atn_db  = DBHandler("./database/Memex.db")
 atn_db.cur.execute('SELECT domain_id, domain_name FROM domain WHERE domain_id<=3')
 domains = atn_db.cur.fetchall()
 dh.write('<trec_dd>\n')

@@ -10,7 +10,7 @@ def dupTopic():
     topic_id = 391
     # copy this topic to this userid
 
-    atn_db  = DBHandler('./database/test.db')
+    atn_db  = DBHandler('./database/Memex.db')
     atn_db.insert('topic', [None, "slums and orphans _ debug", None, userid, 1, 'L', 'L', '', '', 0])
     new_tid = atn_db.cur.lastrowid
 

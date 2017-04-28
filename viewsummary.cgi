@@ -5,7 +5,7 @@ import cgi, sqlite3
 from database import DBHandler
 
 def viewsummary():
-    atn_db = DBHandler("./database/test.db")
+    atn_db = DBHandler("./database/Memex.db")
 
     if True:
         fh = open('./view/summary.csv','w')

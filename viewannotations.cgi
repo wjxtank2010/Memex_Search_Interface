@@ -9,7 +9,7 @@ from os import environ
 def viewannotations(form, environ):
     userid = form.getvalue("userid")
     username = form.getvalue("username")
-    atn_db = DBHandler("./database/test.db")
+    atn_db = DBHandler("./database/Memex.db")
 
     result = cookieAuthentication(environ)
     if result:

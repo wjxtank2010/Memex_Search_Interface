@@ -2,7 +2,7 @@ class db_path:
     user = './database/user.db'
     atn = './database/Memex.db'
 
-home_prefix = 'infosense.cs.georgetown.edu/atest/'
+home_prefix = 'infosense.cs.georgetown.edu/~jw1498/test/'
 
 domains = [
     {
