@@ -199,10 +199,10 @@ function addTopic(){
     $screen_lock.prependTo($("body"));
     $("#Atopic").css({
     	"z-index" : 10001,
-	"position" : "relative"
+	    "position" : "relative"
     });
     $screen_lock.click(function(){
-	alertdialog(1);
+	    alertdialog(1);
     });
     $("#Ctopic").hide();
     $("#Atopic input").val("");
@@ -228,10 +228,10 @@ function confirmAddTopic(){
 
 function addTopicCallBack(response){
     if (response == 0){
-	alertdialog(2);
+	    alertdialog(2);
     }
     else if (response == -1){
-	alertdialog(6);
+	    alertdialog(6);
     }
     else{
         //alert("Topic: " + $("#Atopic input").val() + " successfully added");

@@ -8,8 +8,8 @@ from authentication import cookieAuthentication
 from os import environ
 from config import db_path
 
-def topic_nameCheck(topic_name, topic_id, atn_db):
-    atn_db.cur.execute('SELECT topic_name FROM topic WHERE state<2 AND topic_id!=?', [int(topic_id)])
+def topic_nameCheck(userid,topic_name, topic_id, atn_db):
+    atn_db.cur.execute('SELECT topic_name FROM topic WHERE state<2 AND topic_id!=? AND userid=?', [int(topic_id),int(userid)])
     names = atn_db.cur.fetchall()
     for name, in names:
         if name.lower() == topic_name.lower():
@@ -31,7 +31,7 @@ def topicHandle(form, environ):
         atn_db  = DBHandler(db_path.atn)
 
         ## for edit: topic-user matching check
-        flag = topic_nameCheck(topic_name, topic_id, atn_db)
+        flag = topic_nameCheck(userid,topic_name, topic_id, atn_db)
         if flag:
             response = 0
         else:
@@ -63,7 +63,7 @@ def topicHandle(form, environ):
                     atn_db.cur.execute('SELECT mode, level, para, docno FROM topic WHERE topic_id=?', [last_topic_id])
                     mode, level, para, docno = atn_db.cur.fetchone()
 
-                    atn_db.insert('topic',[None, topic_name, None, int(userid), int(domain_id), mode, level, '', docno, 0])
+                    atn_db.insert('topic',[None, topic_name, int(userid), int(domain_id), mode, level, '', docno, 0])
                     response = atn_db.cur.lastrowid
 
                     para = para.replace('T='+str(last_topic_id), 'T='+str(response))
