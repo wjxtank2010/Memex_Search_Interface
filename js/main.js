@@ -37,17 +37,17 @@ function loptionChange(){
     $(this).html(loptions[loption]);
 }
 
-function fillDomainBar(){
-    var $option;
-
-    for (i=2; i<dict["domains"].length;i++){
-        $option = $("<option></option>").val(dict["domains"][i][0]).text(dict["domains"][i][1]);
-        if (dict["domains"][i][0] == dict['domains'][0]){
-            $option.prop("selected",true);
-        };
-        $("#Sdomain").append($option)
-    };
-}
+//function fillDomainBar(){
+//    var $option;
+//
+//    for (i=2; i<dict["domains"].length;i++){
+//        $option = $("<option></option>").val(dict["domains"][i][0]).text(dict["domains"][i][1]);
+//        if (dict["domains"][i][0] == dict['domains'][0]){
+//            $option.prop("selected",true);
+//        };
+//        $("#Sdomain").append($option)
+//    };
+//}
 
 function fillInfo(){
     $("#username").text('Hi, ' + dict['username'])
@@ -58,22 +58,23 @@ function fillInfo(){
 }
 
 function lemurBoxJump(){
-    if ( mode == 'L'){
-        url = dict["domains"][1];
-    }
-    else if (mode == 'S')
-    {
-        url = dict["domains"][1].replace('search', 'solr');
-    }
-    else if (mode == 'T'){
-        url = dict["domains"][1].replace('search', 'terrier');
-    }
-    else if (mode == 'G'){
-        url = dict["domains"][1].replace('search', 'gtown');
-    }
-    else{
-        url = dict["domains"][1].replace('search', 'nist');
-    }
+//    if ( mode == 'L'){
+//        url = dict["domains"][1];
+//    }
+//    else if (mode == 'S')
+//    {
+//        url = dict["domains"][1].replace('search', 'solr');
+//    }
+//    else if (mode == 'T'){
+//        url = dict["domains"][1].replace('search', 'terrier');
+//    }
+//    else if (mode == 'G'){
+//        url = dict["domains"][1].replace('search', 'gtown');
+//    }
+//    else{
+//        url = dict["domains"][1].replace('search', 'nist');
+//    }
+    url = dict["domains"][1]
     if (level == 'L'){
         $("#control_panel_2").hide();
         $("#lemurbox").attr("src", home_prefix+url+'?'+para);       
@@ -86,9 +87,8 @@ function lemurBoxJump(){
 }
 
 function getQuery(){
-    if (mode == 'G' || mode =='N') {return;}
+    if (mode != 'N') {return;} //update query box only if it is normal query
     var tmp = para.split("q=");
-
     if (tmp.length<=1) {return;}
     $("#control_panel input").val(decodeURIComponent(tmp[1]).replace(/\+/g," "));
 }
@@ -105,7 +105,7 @@ function parse(){
     level = dict['topics'][2];
     para = dict['topics'][3];
 
-    fillDomainBar();
+    //fillDomainBar();
     fillInfo();
     getQuery();
     lemurBoxJump();
