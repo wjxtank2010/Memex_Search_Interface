@@ -120,7 +120,7 @@ if res:
 	round = int(round)
 round += 1
 for documentId in results:
-	print((None,topicId,round,documentId))
+	#print((None,topicId,round,documentId))
 	cur.execute('INSERT INTO %s VALUES(%s)' %("search_list", "?,?,?,?"), (None,topicId,round,documentId))
 atn_db.commit()
 atn_db.close()
