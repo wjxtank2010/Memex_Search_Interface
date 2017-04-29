@@ -14,6 +14,7 @@ para, = atn_db.cur.fetchone()
 query = para.split("&")[-1]
 query = re.sub("%3A",":",query)
 query = re.sub("%3B",";",query)
+query = re.sub("%20"," ",query)
 must_list = []
 should_list = []
 query_body = {"size":500,"query":{"bool":{"must":[{"match":{"raw_content": ""}}],"should":[]}} }
