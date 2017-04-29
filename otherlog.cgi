@@ -14,7 +14,9 @@ def logHandle(form, environ):
     if not result: return
 
     userid, username, usercookie = result
-
+    f = open("a.txt","w")
+    f.write("haha")
+    f.close()
     topic_id = form.getvalue('topic_id', None)
     docno = form.getvalue('docno', None)
     mode = form.getvalue('source', None)
@@ -25,7 +27,9 @@ def logHandle(form, environ):
     hstring = form.getvalue('hstring',None)
     color = form.getvalue('color', None)
     subtopic_id = form.getvalue('subtopic_id', None)
-
+    f = open("b.txt","w")
+    f.write("haha")
+    f.close()
     #if mode == 'L': source = 'lemur'
     #elif mode == 'S': source = 'solr'
     #elif mode == 'T': source = 'terrier'
@@ -39,6 +43,9 @@ def logHandle(form, environ):
     elif mode == "T": source = "textFindMore"
     else: source = "unknown"
 
+    f = open("c.txt","w")
+    f.write("haha")
+    f.close()
     if flag == 'logout':
         try: mylog.log_logout(username)
         except: pass
@@ -67,6 +74,9 @@ def logHandle(form, environ):
         #except: pass
         atn_db.close()
     elif flag == 'query':
+        f = open("d.txt","w")
+        f.write("haha")
+        f.close()
         atn_db = DBHandler(db_path.atn)
         atn_db.cur.execute('SELECT topic_name FROM topic WHERE topic_id=?', [int(topic_id)])
         topic_name, = atn_db.cur.fetchone()
