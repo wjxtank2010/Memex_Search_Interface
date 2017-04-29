@@ -26,12 +26,18 @@ def logHandle(form, environ):
     color = form.getvalue('color', None)
     subtopic_id = form.getvalue('subtopic_id', None)
 
-    if mode == 'L': source = 'lemur'
-    elif mode == 'S': source = 'solr'
-    elif mode == 'T': source = 'terrier'
-    elif mode == 'G': source = 'pink_findmore'
-    elif mode == 'N': source = 'blue_findmore'
-    else: source = 'unknown'
+    #if mode == 'L': source = 'lemur'
+    #elif mode == 'S': source = 'solr'
+    #elif mode == 'T': source = 'terrier'
+    #elif mode == 'G': source = 'pink_findmore'
+    #elif mode == 'N': source = 'blue_findmore'
+    #else: source = 'unknown'
+    if mode == "N": source = "normalQuery"
+    elif mode == "I":source = "imageQuery"
+    elif mode == "S": source = "structureQuery"
+    elif mode == "E": source = "empty"
+    elif mode == "T": source = "textFindMore"
+    else: source = "unknown"
 
     if flag == 'logout':
         try: mylog.log_logout(username)
@@ -62,14 +68,11 @@ def logHandle(form, environ):
         atn_db.close()
     elif flag == 'query':
         atn_db = DBHandler(db_path.atn)
-	a = open("query.txt","w")
-	a.write(query)
-	a.close()
         atn_db.cur.execute('SELECT topic_name FROM topic WHERE topic_id=?', [int(topic_id)])
         topic_name, = atn_db.cur.fetchone()
-	atn_db.cur.execute('UPDATE topic SET para=? WHERE topic_id=?', ["T="+topic_id+"&q="+query,int(topic_id)])
+	    atn_db.cur.execute('UPDATE topic SET para=?,mode=? WHERE topic_id=?', [query,mode,int(topic_id)])
         atn_db.commit()
-	try: mylog.log_query(username, source, topic_id, topic_name, query)
+	    try: mylog.log_query(username, source, topic_id, topic_name, query)
         except: pass
         atn_db.close()
     elif flag == 'findmore':

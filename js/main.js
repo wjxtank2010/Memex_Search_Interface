@@ -12,7 +12,8 @@ loptions = ["hide tagged", "show tagged"];
     tid
     tname
     level
-    para
+    para: format: "T=&Mode=&q="
+           T: topic id   Mode: query mode(see database.py table topic for all modes)  q: query
     doc_id
     url
     loption
@@ -944,16 +945,13 @@ $(document).ready(function(){
       max: 60,
       values: [ 20, 40 ],
       slide: function( event, ui ) {
-        //$( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-        //event.preventDefault();
         $( "#age_range" ).val($( "#ageSlider" ).slider( "values", 0 ) +
-          " - " + $( "#ageSlider" ).slider( "values", 1 ) ); 
-	//refineSearch();
+          " - " + $( "#ageSlider" ).slider( "values", 1 ) );
       },
       change:function(event,ui) {
-	 event.preventDefault();
-	 $age = 1;
-	 refineSearch($age,$height);
+	    event.preventDefault();
+	    $age = 1;
+	    refineSearch();
       }
     });
     $( "#age_range" ).val($( "#ageSlider" ).slider( "values", 0 ) +
@@ -966,8 +964,8 @@ $(document).ready(function(){
       values: [ 150, 190 ],
       slide: function( event, ui ) {
         $( "#height_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] + "cm");
-	$height = 1;
-	refineSearch($age,$height);	
+	    $height = 1;
+	    refineSearch();
       }
     });
     //$('.hairbox').change(function() {

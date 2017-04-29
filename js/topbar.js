@@ -43,25 +43,15 @@ function moodFeedback(m){
 }
 
 function runQuery(){
-    //mode = $(this).val();
-    //if ($(this).html() == "lemur"){
-    //    url = dict["domains"][1];
-    //}
-    //else{
-	    //url = dict["domains"][1].replace("search","solr");
-    //    url = dict["domains"][1].replace('search', $(this).html());
-    //}
-    mode = "T"
-    url = dict["domains"][1].replace('search',"elasticsearch")
+    mode = "N" //search from query box is normal search
+    url = dict["domains"][1]
     level = 'L';
-    para = "T=" + tid + "&q=" + encodeURIComponent($("#querybox").val());
-    //thequery = $("#querybox").val();
+    para = "T=" + tid + "&Mode="+mode+"&q=" + encodeURIComponent($("#querybox").val());
     thequery = $("#querybox").val();
     search_signal = 1;
     // ?? set mode or level ??
     $("#control_panel_2").hide();
     $("#highlight input", parent.document).val("");
-
     lockscreen();
 
     $("#lemurbox").attr("src", home_prefix + url + "?" + para);
@@ -80,11 +70,60 @@ function runQuery(){
     // if parent.tname == '' #lemurdiscard.hide()
 }
 
+function structureQuery(field){ //format of structure query:  fieldName:value;   ex.  phone:2021234567
+    mode = "S" //abbreviation for structured query
+    q = "" //query
+    if (field == "phone") {
+        if ($("#phoneInput").val()) {
+            q = "phone:"+$("#phoneInput").val()+";";
+        }
+    } else if (field == "email") {
+        if ($("#emailInput").val()) {
+            q = "email:"+$("#emailInput").val()+";"
+        }
+    } else if (field == "name") {
+        if ($("#nameInput").val()) {
+            q = "name:"+$("#nameInput").val()+";"
+        }
+    } else if (field == "socialMedia") {
+        if (("#socialMediaInput").val() && $("#socialMediaInput").val() != "-- select an social media --") {
+            q += "socialMedia:"+$("#socialMediaInput").val()+";";
+        }
+        if ($("#socialMediaIDInput").val())  {
+            q += "socialMediaID:"+$("#socialMediaIDInput").val()+";";
+        }
+    } else if (field == "reviewSite") {
+        if ($("#reviewSiteInput").val() &&  $("#reviewSiteInput").val() != "-- select a review site --")  {
+            q += "reviewSite:"+$("#reviewSiteInput").val()+";";
+        }
+        if ($("#reviewSiteIDInput").val())  {
+            q += "reviewSiteID:"+$("#reviewSiteIDInput").val()+";";
+        }
+    }
+    if (q) {
+        para = "T=" + tid + "Mode="+ mode+ "&q="+encodeURIComponent(q)
+        search_signal = 1;
+        $("#control_panel_2").hide();
+        $("#highlight input", parent.documenqt).val("");
+        lockscreen();
+        $("#lemurbox").attr("src", home_prefix + url + "?" + para);
+        $.ajax({
+            method: "post",
+            url: home_prefix + "otherlog.cgi",
+            data:{
+                source: mode,
+                topic_id: tid,
+                query: q,
+                flag: 'query'
+            }
+        })
+    }
+}
+
 function phoneSearch(){
-    mode = "T";
-    para = "T=" + tid + "&q=" + "" + encodeURIComponent("phone:"+$("#phoneInput").val()+";");
+    mode = "S";
+    para = "T=" + tid + "Mode="+ mode+ "&q=" + encodeURIComponent("phone:"+$("#phoneInput").val()+";");
     search_signal = 1;
-    url = dict["domains"][1].replace("search","elasticsearch");
     $("#control_panel_2").hide();
     $("#highlight input", parent.document).val("");
     lockscreen();
@@ -156,41 +195,14 @@ function reviewSiteSearch() {
     }
 }
 
-function startnewSearch() {
-    mode = "T";
-    phone = $("#phoneInput").val()
-    if (phone.length>=9) {
-    	query = phone.substr(0,3)+" "+phone.substr(3,6)+" "+phone.substr(6)+$("#emailInput").val();
-    }
-    else {
-	query = phone + $("#emailInput").val();
-    }
-    para = "T=" + tid + "&q=" + "" + encodeURIComponent(query);
-    search_signal = 1;
-    url = dict["domains"][1].replace("search","elasticsearch");
-    $("#control_panel_2").hide();
-    $("#highlight input", parent.document).val("");
-    lockscreen();
-    $("#lemurbox").attr("src", home_prefix + url + "?" + para);               
-    }                 
-
-function refineSearch(age,height) {
-    mode = "T";
+function refineSearch() {
+    mode = "S";
     query = ""
-    //if ($("#phoneInput").val()) {
-    //    query += "phone:"+$("#phoneInput").val()+";";
-    //}
-    //if ($("#emailInput").val()) {
-    //   query += "email:"+$("#emailInput").val()+";";
-    //}
-    //if ($( "#ageSlider" ).slider( "values", 0 ) != 20 && $( "#ageSlider" ).slider( "values", 1) != 40) {
-    //    query += "age:"+$( "#ageSlider" ).slider( "values", 0 )+$( "#ageSlider" ).slider( "values", 1 )+";";
-    //}
-    if (age == 1) {
-	query += "age:"+$( "#ageSlider" ).slider( "values", 0 )+$( "#ageSlider" ).slider( "values", 1 )+";";
+    if ($age == 1) {
+	    query += "age:"+$( "#ageSlider" ).slider( "values", 0 )+$( "#ageSlider" ).slider( "values", 1 )+";";
     }
-    if (height== 1) {
-	query += "height:"+$( "#heightSlider" ).slider( "values", 0 )+$( "#heightSlider" ).slider( "values", 1 )+";";
+    if ($height== 1) {
+	    query += "height:"+$( "#heightSlider" ).slider( "values", 0 )+$( "#heightSlider" ).slider( "values", 1 )+";";
     }
     if ($("#nameInput").val()) {
         query += "name:"+$("#nameInput").val()+";";
@@ -256,13 +268,22 @@ function refineSearch(age,height) {
         query += "reviewSiteID:"+$("#reviewSiteIDInput").val()+";";
     }
     if (query) {
-        para = "T=" + tid + "&q=" + "" + encodeURIComponent(query);
-        url = dict["domains"][1].replace('search',"elasticsearch");
+        para = "T=" + tid + "Mode=" + mode+ "&q=" + "" + encodeURIComponent(query);
         search_signal = 1;
         $("#control_panel_2").hide();
         $("#highlight input", parent.document).val("");
         lockscreen();
         $("#lemurbox").attr("src", home_prefix + url + "?" + para);
+        $.ajax({
+            method: "post",
+            url: home_prefix + "otherlog.cgi",
+            data:{
+                source: mode,
+                topic_id: tid,
+                query: q,
+                flag: 'query'
+            }
+        })
     }
 }
 
@@ -273,16 +294,16 @@ function move(opnum){
     }
     if (opnum == 'd' || opnum =='r') {lockscreen();}
     $.ajax({
-            method: "post",
-            url: "http://cs-sys-1.uis.georgetown.edu/~jw1498/test/moveHandler.cgi",
+        method: "post",
+        url: "http://cs-sys-1.uis.georgetown.edu/~jw1498/test/moveHandler.cgi",
 	    data: {
-                topic_id: tid,
-                docno: doc_id, // ?? make sure set doc_id ??
-                signal: opnum,
-            },
-            success: function(response){
-                response = response.trim();
-		$(".screen-cover").remove();
+            topic_id: tid,
+            docno: doc_id, // ?? make sure set doc_id ??
+            signal: opnum,
+        },
+        success: function(response){
+            response = response.trim();
+		    $(".screen-cover").remove();
                 if (response == "-1"){
                     if (opnum == 'r') alertdialog(11);
                     if (opnum == 'd') alertdialog(13);
@@ -294,7 +315,7 @@ function move(opnum){
                     //doc_id = response.trim();
                     //$("#lemurbox").attr("src", home_prefix+url+'?e='+response)
                 //    if (opnum == 'd') {
-			alertdialog(15);
+			    //alertdialog(15);
 		//    } else {
 		//	alertdialog(16);
 		//    }
@@ -312,25 +333,25 @@ function switchDoc(op) {
     $.ajax({
         method: "post",
         url: "http://cs-sys-1.uis.georgetown.edu/~jw1498/test/switchDocHandler.cgi",
-	    data: {
-                topic_id: tid,
-                docno: doc_id, // ?? make sure set doc_id ??
-                signal: op,
-            },
-            success: function(response){
-                response = response.trim();
-                if (response == "-1"){
-                    $(".screen-cover").remove();
-                }
-                else if (response == "0"){
-                    goback();
-                }
-                else{
-                    doc_id = response.trim();
-                    $("#lemurbox").attr("src", home_prefix+url+'?e='+response)
-                }
+	    data:{
+            topic_id: tid,
+            docno: doc_id, // ?? make sure set doc_id ??
+            signal: op,
+        },
+        success: function(response){
+            response = response.trim();
+            if (response == "-1"){
+                $(".screen-cover").remove();
             }
-            // what about 0 response ??
+            else if (response == "0"){
+                goback();
+            }
+            else{
+                doc_id = response.trim();
+                $("#lemurbox").attr("src", home_prefix+url+'?e='+response)
+            }
+        }
+        // what about 0 response ??
    });
 }
 
@@ -348,7 +369,6 @@ function goback(){
         }
     })
     $("#lemurbox").attr("src", home_prefix+url+'?'+para);
-    //$("#highlight input").val("");
 }
 
 function prepareTopbar(){
