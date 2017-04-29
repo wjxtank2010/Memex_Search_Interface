@@ -113,9 +113,11 @@ else:
 	for document in documents:
 		print document["_id"]
 cur.execute("SELECT round from search_list where topic_id=? ORDER BY round DESC LIMIT 1",[topicId])
-round,= cur.fetchone()
-if not round:
-	round = 1
+res = cur.fetchone()
+round = 0
+if res:
+	round, = res
+	round += 1
 else:
 	round += 1
 for documentId in results:
