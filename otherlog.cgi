@@ -12,7 +12,6 @@ def logHandle(form, environ):
 
     result = cookieAuthentication(environ)
     if not result: return
-
     userid, username, usercookie = result
     f = open("a.txt","w")
     f.write("haha")
@@ -80,9 +79,9 @@ def logHandle(form, environ):
         atn_db = DBHandler(db_path.atn)
         atn_db.cur.execute('SELECT topic_name FROM topic WHERE topic_id=?', [int(topic_id)])
         topic_name, = atn_db.cur.fetchone()
-	    atn_db.cur.execute('UPDATE topic SET para=?,mode=? WHERE topic_id=?', [query,mode,int(topic_id)])
+        atn_db.cur.execute('UPDATE topic SET para=?,mode=? WHERE topic_id=?', [query,mode,int(topic_id)])
         atn_db.commit()
-	    try: mylog.log_query(username, source, topic_id, topic_name, query)
+        try: mylog.log_query(username, source, topic_id, topic_name, query)
         except: pass
         atn_db.close()
     elif flag == 'findmore':
