@@ -59,22 +59,6 @@ function fillInfo(){
 }
 
 function lemurBoxJump(){
-//    if ( mode == 'L'){
-//        url = dict["domains"][1];
-//    }
-//    else if (mode == 'S')
-//    {
-//        url = dict["domains"][1].replace('search', 'solr');
-//    }
-//    else if (mode == 'T'){
-//        url = dict["domains"][1].replace('search', 'terrier');
-//    }
-//    else if (mode == 'G'){
-//        url = dict["domains"][1].replace('search', 'gtown');
-//    }
-//    else{
-//        url = dict["domains"][1].replace('search', 'nist');
-//    }
     url = dict["domains"][1]
     if (level == 'L'){
         $("#control_panel_2").hide();
@@ -694,23 +678,23 @@ function addPassage(event){
             });
 	}else {
 	    $.ajax({
-                                method: "post",
-                                url: "passageHandler.cgi",
-                                data:{
-                                    docno: doc_id,
-                                    offset_start: start,
-                                    offset_end: end,
-                                    subtopic_id: sid,
-                                    passage_name: ptext
-                                },
-                                success: function(response){
-                                    addPassageCallBack(ptext, $target, response.trim(), doc_id);
-                                    getCount();
-                                },
-                                complete: function(){
-                                $(".screen-cover").remove();
-                                }
-                           });
+            method: "post",
+            url: "passageHandler.cgi",
+            data:{
+                docno: doc_id,
+                offset_start: start,
+                offset_end: end,
+                subtopic_id: sid,
+                passage_name: ptext
+            },
+            success: function(response){
+                addPassageCallBack(ptext, $target, response.trim(), doc_id);
+                getCount();
+            },
+            complete: function(){
+            $(".screen-cover").remove();
+            }
+       });
 	}
         //var data = event.dataTransfer.getData("text");
 	//var ptext = data;
@@ -1137,17 +1121,17 @@ $(document).ready(function(){
     	}
     });
     
-    $("#summary").click(function(){
-	$.ajax({
-	    method: "post",
-	    url: "./viewsummary.cgi",
-	    data : {
-                userid: uid,
-                username: uname,
-	    },
-	    success: function(){
-                window.location = './view/summary.csv'
-            }
-	});
-    });
+//    $("#summary").click(function(){
+//        $.ajax({
+//            method: "post",
+//            url: "./viewsummary.cgi",
+//            data : {
+//                    userid: uid,
+//                    username: uname,
+//            },
+//            success: function(){
+//                    window.location = './view/summary.csv'
+//                }
+//        });
+//        });
 });

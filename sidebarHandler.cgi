@@ -20,7 +20,7 @@ def sidebarHandle(form, environ):
         subtopics = atn_db.cur.fetchall()
         for subtopic in subtopics:
             subdata = list(subtopic)
-            atn_db.cur.execute('SELECT passage_id, passage_name, docno, grade FROM passage WHERE subtopic_id=? AND state < 2',[subdata[0]])
+            atn_db.cur.execute('SELECT passage_id, passage_name, docno, mode FROM passage WHERE subtopic_id=? AND state < 2',[subdata[0]])
             passages = atn_db.cur.fetchall()
             for passage in passages:
                 appendpassage = list(passage)
