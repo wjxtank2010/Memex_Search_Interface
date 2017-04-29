@@ -109,9 +109,9 @@ if "ethnicity" in query_dic:
 							break
 
 else:
-	results = documents
 	for document in documents:
 		print document["_id"]
+		results.append(document["_id"])
 cur.execute("SELECT round from search_list where topic_id=? ORDER BY round DESC LIMIT 1",[topicId])
 res = cur.fetchone()
 round = 0
