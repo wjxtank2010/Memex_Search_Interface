@@ -8,6 +8,7 @@ from elasticsearch import Elasticsearch,RequestsHttpConnection
 
 topicId = int(sys.argv[1])
 atn_db  = DBHandler("../../../database/Memex.db")
+cur = atn_db.cur
 atn_db.cur.execute("SELECT para from topic where topic_id=?",[topicId])
 para, = atn_db.cur.fetchone()
 query = para.split("&")[-1]
@@ -79,22 +80,22 @@ else:
 	query_body["query"]["bool"]["must"][0]["match"]["raw_content"] = query
 a = open("test.txt","w")
 a.write(str(query_body))
-		a.close()
+a.close()
 es = Elasticsearch(["localhost:9200/positiongt"],request_timeout=60)
 response = es.search(body=query_body,request_timeout=60)
 documents = response["hits"]["hits"]
+results = []
 if "ethnicity" in query_dic:
 	f = open("nation_continent.txt")
-				ethnicity_dic = yaml.load(f)
-				candidate_countries = ethnicity_dic[query_dic["ethnicity"]]
+	ethnicity_dic = yaml.load(f)
+	candidate_countries = ethnicity_dic[query_dic["ethnicity"]]
 	for document in documents:
 		if "ethnicity" in document["_source"] and document["_source"]["ethnicity"]:
 			ethnicities = map(lambda x:x.lower(),document["_source"]["ethnicity"])
 			#print(ethnicities)
 			if query_dic["ethnicity"] in ethnicities:
 				print(document["_id"])
-				q.write(document["_id"])
-				q.write("\n")
+				results.append(document["_id"])
 			else:
 				isMatch = False
 				for eth_candi in ethnicities:
@@ -103,15 +104,23 @@ if "ethnicity" in query_dic:
 					for coun_candi in candidate_countries:
 						if fuzz.ratio(eth_candi,coun_candi.lower())>=80:
 							print(document["_id"])
-							q.write(document["_id"])
-							q.write("\n")
+							results.append(document["_id"])
 							isMatch = True
 							break
 
 else:
+	results = documents
 	for document in documents:
-		q.write(document["_id"])
-		q.write("\n")
 		print document["_id"]
+cur.execute("SELECT round from search_list where topic_id=? ORDER BY round DESC LIMIT 1",[topicId])
+round,= cur.fetchone()
+if not round:
+	round = 1
+else:
+	round += 1
+for documentId in results:
+	cur.execute('INSERT INTO %s VALUES(%s)' %("search_list", "?,?,?,?"), (None,topicId,round,documentId))
+atn_db.commit()
+atn_db.close()
 
 
