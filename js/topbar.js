@@ -54,8 +54,6 @@ function runQuery(){
     $("#highlight input", parent.document).val("");
     lockscreen();
 
-    $("#lemurbox").attr("src", home_prefix + url + "?" + para);
-
     $.ajax({
         method: "post",
         url: home_prefix + "otherlog.cgi",
@@ -64,6 +62,9 @@ function runQuery(){
             topic_id: tid,
             query: thequery,
             flag: 'query'
+        },
+        success:function(response) {
+            $("#lemurbox").attr("src", home_prefix + url + "?" + para);
         }
     })
     
