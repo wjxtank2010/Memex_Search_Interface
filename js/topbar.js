@@ -106,7 +106,6 @@ function structureQuery(field){ //format of structure query:  fieldName:value;  
         $("#control_panel_2").hide();
         $("#highlight input", parent.documenqt).val("");
         lockscreen();
-        $("#lemurbox").attr("src", home_prefix + url + "?" + para);
         $.ajax({
             method: "post",
             url: home_prefix + "otherlog.cgi",
@@ -115,6 +114,9 @@ function structureQuery(field){ //format of structure query:  fieldName:value;  
                 topic_id: tid,
                 query: q,
                 flag: 'query'
+            },
+            success:function(response) {
+                $("#lemurbox").attr("src", home_prefix + url + "?" + para);
             }
         })
     }
@@ -273,7 +275,6 @@ function refineSearch() {
         $("#control_panel_2").hide();
         $("#highlight input", parent.document).val("");
         lockscreen();
-        $("#lemurbox").attr("src", home_prefix + url + "?" + para);
         $.ajax({
             method: "post",
             url: home_prefix + "otherlog.cgi",
@@ -282,6 +283,9 @@ function refineSearch() {
                 topic_id: tid,
                 query: q,
                 flag: 'query'
+            },
+            success:function(response) {
+                $("#lemurbox").attr("src", home_prefix + url + "?" + para);
             }
         })
     }
