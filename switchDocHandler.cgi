@@ -3,6 +3,17 @@
 from authentication import cookieAuthentication
 from os import environ
 import cgi
+from database import DBHandler
+
+
+
+
+
+
+
+
+
+
 def moveHandle(form,environ):
     result = cookieAuthentication(environ)
     #a = open("result.txt","w")
@@ -14,19 +25,8 @@ def moveHandle(form,environ):
     topic_id = int(form.getvalue("topic_id"))
     docno = form.getvalue("docno")
     signal = form.getvalue("signal")
-    a = open("result.txt","w")
-    a.write(docno)
-    a.close()
     print("Content-Type: text/plain\r\n")
-    search_list = "anno_lemur/ebola/elasticsearch/search_list"
-    f = open(search_list)
-    lines = [line.strip() for line in f]
-    try:
-	index = lines.index(docno)
-        if signal == "p" and index-1>=0:
-	    print(lines[index-1])
-	elif signal == "n" and len(lines)>index+1:
-	    print(lines[index+1])
+    atn_db = DBHandler(db_path.atn)
 	else:
 	    print("-1")
     except:

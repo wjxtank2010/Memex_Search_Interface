@@ -78,9 +78,38 @@ def moveHandle(form, environ):
     #    atn_db.cur.execute('UPDATE topic SET docno=? WHERE topic_id=?', [nextdoc, topic_id])
     #    atn_db.commit()
     #else: 
-    #    print("0")  
-    
-        atn_db.close()
+    #    print("0")
+    table = 'search_list'
+    tmpresult = None
+    if signal in ['p','n']:
+        atn_db.cur.execute('SELECT round FROM %s WHERE topic_id=? AND docno=? ORDER BY round DESC LIMIT 1'%(table),[topic_id,docno])
+        res = atn_db.cur.fetchone()
+        if res:
+            round, = res
+            if signal == 'p':
+                atn_db.cur.execute('SELECT row_num, docno FROM %s WHERE topic_id=? AND round=? AND row_num < (SELECT row_num FROM %s WHERE topic_id=? AND docno=?) ORDER BY row_num DESC LIMIT 1'%(table, table), [topic_id,round,topic_id, docno])
+                try: mylog.log_prev_doc(username, str(topic_id), docno)
+                except: pass
+            else:
+                atn_db.cur.execute('SELECT row_num, docno FROM %s WHERE topic_id=? AND round=? AND row_num > (SELECT row_num FROM %s WHERE topic_id=? AND docno=?) LIMIT 1'%(table, table), [topic_id, round, topic_id, docno])
+                try: mylog.log_next_doc(username, str(topic_id), docno)
+                except: pass
+            tmpresult = atn_db.cur.fetchone()
+
+    if signal in ['d','r']:
+        atn_db.cur.execute('DELETE FROM search_list WHERE topic_id=? AND docno=?',[topic_id, docno])
+        atn_db.commit()
+
+    if tmpresult:
+        row_num, nextdoc = tmpresult
+        print(nextdoc)
+        # update topic last doc
+        atn_db.cur.execute('UPDATE topic SET docno=? WHERE topic_id=?', [nextdoc, topic_id])
+        atn_db.commit()
+    else:
+        print("0")
+
+    atn_db.close()
 
 # __main__
 
