@@ -19,7 +19,7 @@ def passageHandle(form, environ):
         docno        = form.getvalue("docno", 0)
         passage_name = form.getvalue("passage_name", None)
         subtopic_id  = form.getvalue("subtopic_id", None)
-        mode = form.getvalue("subtopic_id",None)
+        mode = form.getvalue("mode",None)
 
         atn_db  = DBHandler(db_path.atn)
 

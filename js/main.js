@@ -122,30 +122,25 @@ function getSidebar(){
             dataType: "json",
             success: function(data){
                 for (i=0;i<data.length;i++){
-                    $subtopic = generateSubtopic(data[i][1], data[i][0]);
+                    $subtopic = generateSubtopic(data[i][0], data[i][1]);
                     for (j=2;j<data[i].length;j++){
-                        $passage = addPassageCallBack(data[i][j][1], $subtopic.find(".droppable"), data[i][j][0], data[i][j][2]);
-                        if (data[i][j][3] != 0){
-                        //    $passage.addClass("grey");
-                            $passage.find("input").eq(data[i][j][3] - 1).prop("checked",true);
-                        //    $passage.find("input").prop("disabled",true);
-                        }
+                        $passage = addPassageCallBack(data[i][j][3],data[i][j][1], $subtopic.find(".droppable"), data[i][j][0], data[i][j][2]);
                     }
                 }
             },
-	    complete: function(){
-		if (uname == "admin"){
-		    $('.deleteSubtopic').hide();
-		    $('.Cboxheader span').hide();
-		    $('.deletePassage').hide();
-		    $(".passage form input").prop("disabled",true);
-		};
-	    }
+            complete: function(){
+                if (uname == "admin"){
+                    $('.deleteSubtopic').hide();
+                    $('.Cboxheader span').hide();
+                    $('.deletePassage').hide();
+                    $(".passage form input").prop("disabled",true);
+                };
+            }
         });
     }
 };
 
-function generateSubtopic(subtopic_name, subtopic_id){
+function generateSubtopic(subtopic_id,subtopic_name){
     $dropbox = newDropbox(subtopic_name, subtopic_id);
     $("#dropbox_list").prepend($dropbox).show()
     if ($dropbox.find("h1").width() >= 279){
@@ -284,14 +279,14 @@ function confirmEditTopic(){
 
 function editTopicCallBack(response){
     if (response == 0){
-	alertdialog(2);
+	    alertdialog(2);
     }
     else if (response == -1){
-	alertdialog(6);
+	    alertdialog(6);
     }
     else{
         $("#Stopic option:selected").text($("#Etopic input").val());
-	$("#topicname2 span").text($("#Stopic option:selected").text());
+	    $("#topicname2 span").text($("#Stopic option:selected").text());
         //alert("Topic name changed successfully");
         $("#Etopic .cancel_topic").trigger("click");
     }
@@ -304,22 +299,22 @@ function cancelTopic(){
 };
 
 function deleteTopic(){
-    if (tname != ''){
-	if (confirm("are you sure you want to delete this topic?") == true){
+    if ( (tname != '') && confirm("are you sure you want to delete this topic?") == true) ){
 	    $.ajax({
-		method : "post",
-		url: "./deleteHandler.cgi",
-		data:{
-		    topic_id: tid,
-		    domain_id: did,
-		    userid: uid
-		},
-		success: function(response){
-		    $("<form action='./beta.cgi' method='post'><input name='topic' value="+response.trim()+"></form>").submit();	
-		}
+            method : "post",
+            url: "./deleteHandler.cgi",
+            data:{
+                topic_id: tid,
+                domain_id: did,
+                userid: uid
+            },
+            success: function(response){
+                var form = $("<form action='./beta.cgi' method='post'><input name='topic' value="+response.trim()+"></form>");
+                $(document.body).append(form);
+                form.submit();
+            }
 	    });
 	};
-    };
 };
 /* -------------------------------- */
 
@@ -362,17 +357,17 @@ function confirmAddSub(){
 
 function addSubCallBack(response){
     if (response == 0){
-	alertdialog(3);
+	    alertdialog(3);
     }
     else if (response == -1){
-	alertdialog(7);
+	    alertdialog(7);
     }
     else{
         $dropbox = newDropbox($("#input_subtopic").val(), response);
         $("#dropbox_list").prepend($dropbox).hide().fadeIn();
-	if ($dropbox.find("h1").width() >= 279){
-	    $dropbox.find("h1").attr("title",$dropbox.find("h1").text());
-	}
+        if ($dropbox.find("h1").width() >= 279){
+            $dropbox.find("h1").attr("title",$dropbox.find("h1").text());
+        }
         $("#cancel_add_sub").trigger("click");
     }
 };
@@ -428,42 +423,37 @@ function allowDrop(ev) {
 function gufindmore(e){
     var dropbox = $(e.target).closest(".dropbox");
     var passages = dropbox.find(".passage");
-    mode = 'G';
     var sid = $(e.target).closest(".dropbox").data("subtopic_id");
-    if (passages.find("#image")) {
-        url = dict["domains"][1].replace('search', 'elasticsearch');
-        imgs = passages.find("#image img");
-	if (imgs.length>0){
-	    img = passages.find("#image img")[0];
-	    para = "img="+img.src
-	} else {
-	    para = "T="+tid+"&q="+encodeURIComponent(passages.find("p").text())
-	}
+    var thequery = "";
+    imgs = passages.find("#image img");
+    if (imgs.length>0){//image passage
+        mode = "I";
+        img = passages.find("#image img")[0];
+        thequery = "T="+tid+"&Mode="+mode+"&q="+img.src;
     } else {
-        url = dict["domains"][1].replace('search', 'gtown');
-        level = 'L';
-        search_signal = 1;
-        tmppara = "a=1&T=" + tid + "&q=" + sid;
-        para = tmppara.replace("a=1&","");
-    }
-    // ?? set mode or level ??
-    $("#control_panel_2").hide();
-    //$("#highlight input", parent.document).val("");
-    lockscreen();
-
-    $("#lemurbox").attr("src", home_prefix + url + "?" + para);
-
-    $.ajax({
-        method: "get",
-        url: home_prefix + "otherlog.cgi",
-        data:{
-            source: mode,
-            topic_id: tid,
-            color: 'pink',
-            subtopic_id: sid,
-            flag: 'findmore'
+        mode = "T";
+        if (passages.find("p").text().length>0) {
+            thequery = "T="+tid+"&Mode="+mode+"&q="+passages.find("p").text();
         }
-    })
+    }
+    if (thequery.length>0) {
+        // ?? set mode or level ??
+        $("#control_panel_2").hide();
+        $("#highlight input", parent.document).val("");
+        lockscreen();
+        $.ajax({
+            method: "get",
+            url: home_prefix + "otherlog.cgi",
+            data:{
+                source: mode,
+                topic_id: tid,
+                color: 'pink',
+                subtopic_id: sid,
+                flag: 'findmore',
+                query:encodeURIComponent(thequery),
+            }
+        });
+    }
 }
 
 function nistfindmore(e){
@@ -502,7 +492,7 @@ function deleteSub(){
 	    method: "post",
 	    url: "./deleteHandler.cgi",
 	    data:{
-		subtopic_id: $p.data("subtopic_id")
+		    subtopic_id: $p.data("subtopic_id")
 	    },
 	    success: function(){
 		$p.fadeOut(300,function(){$(this).remove();})
@@ -550,10 +540,10 @@ function confirmEditSub(){
 
 function editSubCallBack(response, $target){
     if (response == 0){
-	alertdialog(3);
+	    alertdialog(3);
     }
     else if (response == -1){
-	alertdialog(7);
+	    alertdialog(7);
     }
     else{
         $target.closest(".boxheader").find("h1").text($target.siblings("input").val());
@@ -601,8 +591,10 @@ function annotate(event){
 function addPassage(event){
     var doc_id = getDocno();
     var selection = document.getElementById('lemurbox').contentWindow.getSelection();//get the selected text in detail document
+    var passageType = "T";
     if (selection.toString().trim() == "") {//no text selected, use is dragging image
         var ptext = event.dataTransfer.getData("text");
+        passageType = "I"
 //        var lemurbox = document.getElementById("lemurbox")
 //        var innerDoc = lemurbox.contentDocument
 //        var imgs = innerDoc.getElementsByTagName("img")
@@ -612,123 +604,119 @@ function addPassage(event){
 //            }
 //        }
         //var img = $("#lemurbox").contents().find("img[src='"+data+"']") //find the image that is dragged
-	var start = 0;
-    var end = 40;
-    var $target = $(event.target).closest(".droppable");
-    var sid = $target.parent().data("subtopic_id");
-	if ($target.find(".passage") != 0) {
-        $.ajax({
-            url: "countHandler.cgi",
-            data:{
-                topic_id: tid
-            },
-            success: function(response){
-            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-            var name = "";
-            for( var i=0; i < 5; i++ )
-                name += possible.charAt(Math.floor(Math.random() * possible.length));
+        var start = 0;
+        var end = 40;
+        var $target = $(event.target).closest(".droppable");
+        var sid = $target.parent().data("subtopic_id");
+        if ($target.find(".passage") != 0) {
             $.ajax({
-                method: "POST",
-                url: "subtopicHandler.cgi",
-                data: {
-                    userid : uid,
-                    topic_id : tid,
-                    subtopic_name : name
+                url: "countHandler.cgi",
+                data:{
+                    topic_id: tid
                 },
                 success: function(response){
-                    if (response == 0){
-                        alertdialog(3);
-                    }
-                    else if (response == -1){
-                        alertdialog(7);
-                    }
-                    else{
-                        $dropbox = newDropbox(name, response);
-                        $("#dropbox_list").prepend($dropbox).hide().fadeIn();
-                        if ($dropbox.find("h1").width() >= 279){
-                            $dropbox.find("h1").attr("title",$dropbox.find("h1").text());
+                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                var name = "";
+                for( var i=0; i < 5; i++ )
+                    name += possible.charAt(Math.floor(Math.random() * possible.length));
+                $.ajax({
+                    method: "POST",
+                    url: "subtopicHandler.cgi",
+                    data: {
+                        userid : uid,
+                        topic_id : tid,
+                        subtopic_name : name
+                    },
+                    success: function(response){
+                        if (response == 0){
+                            alertdialog(3);
                         }
-                        $("#cancel_add_sub").trigger("click");
+                        else if (response == -1){
+                            alertdialog(7);
+                        }
+                        else{
+                            $dropbox = newDropbox(name, response);
+                            $("#dropbox_list").prepend($dropbox).hide().fadeIn();
+                            if ($dropbox.find("h1").width() >= 279){
+                                $dropbox.find("h1").attr("title",$dropbox.find("h1").text());
+                            }
+                            $("#cancel_add_sub").trigger("click");
+                        }
+                        $target = $dropbox.find(".droppable");
+                        sid = $dropbox.data("subtopic_id");
+                        //$target = $target.closest("#dropbox_list").find(".dropbox").first().find(".droppable");
+                        lockscreen();
+                        $.ajax({
+                            method: "post",
+                            url: "passageHandler.cgi",
+                            data:{
+                                mode: passageType,
+                                docno: doc_id,
+                                subtopic_id: sid,
+                                passage_name: encodeURIComponent(ptext)
+                            },
+                            success: function(response){
+                                addPassageCallBack(passageType,ptext, $target, response.trim(), doc_id);
+                                getCount();
+                            },
+                            complete: function(){
+                            $(".screen-cover").remove();
+                            }
+                       });
                     }
-                    $target = $dropbox.find(".droppable");
-                    sid = $dropbox.data("subtopic_id");
-                    //$target = $target.closest("#dropbox_list").find(".dropbox").first().find(".droppable");
-                    lockscreen();
-                    $.ajax({
-                        method: "post",
-                        url: "passageHandler.cgi",
-                        data:{
-                            docno: doc_id,
-                            offset_start: start,
-                            offset_end: end,
-                            subtopic_id: sid,
-                            passage_name: ptext
-                        },
-                        success: function(response){
-                            addPassageCallBack(ptext, $target, response.trim(), doc_id);
-                            getCount();
-                        },
-                        complete: function(){
-                        $(".screen-cover").remove();
-                    }
-                   });
-            }
-           });
-    }
-        });
-	}else {
-	    $.ajax({
-            method: "post",
-            url: "passageHandler.cgi",
-            data:{
-                docno: doc_id,
-                offset_start: start,
-                offset_end: end,
-                subtopic_id: sid,
-                passage_name: ptext
-            },
-            success: function(response){
-                addPassageCallBack(ptext, $target, response.trim(), doc_id);
-                getCount();
-            },
-            complete: function(){
-            $(".screen-cover").remove();
-            }
-       });
-	}
-        //var data = event.dataTransfer.getData("text");
-	//var ptext = data;
-    } else {
-        var start = Math.min(selection.anchorOffset,selection.focusOffset);
-        var end = start + selection.toString().length;
-        var $target = $(event.target).closest(".droppable");
-	if ($target.find("#image").find("img").length != 0) {
-	    alertdialog(14);
-	}else {
-        var sid = $target.parent().data("subtopic_id");
-        var ptext = event.dataTransfer.getData("text/plain");
-        var data = event.dataTransfer.getData("text");
-        lockscreen();
-        $.ajax({
-            method: "post",
-            url: "passageHandler.cgi",
-            data:{
-                docno: doc_id,
-                offset_start: start,
-                offset_end: end,
-                subtopic_id: sid,
-                passage_name: ptext
-            },
-            success: function(response){
-	        addPassageCallBack(ptext, $target, response.trim(), doc_id);
-                getCount();
-            },
-            complete: function(){
+                });
+                }
+            });
+        }else {
+            $.ajax({
+                method: "post",
+                url: "passageHandler.cgi",
+                data:{
+                    mode: passageType,
+                    docno: doc_id,
+                    subtopic_id: sid,
+                    passage_name: encodeURIComponent(ptext)
+                },
+                success: function(response){
+                    addPassageCallBack(passageType,ptext, $target, response.trim(), doc_id);
+                    getCount();
+                },
+                complete: function(){
                 $(".screen-cover").remove();
-            }
-        });
+                }
+           });
+        }
+            //var data = event.dataTransfer.getData("text");
+        //var ptext = data;
+        }
+    else {
+        var $target = $(event.target).closest(".droppable");
+        if ($target.find("#image").find("img").length != 0) {
+            alertdialog(14);
+        }else {
+            var sid = $target.parent().data("subtopic_id");
+            var ptext = event.dataTransfer.getData("text/plain");
+            var data = event.dataTransfer.getData("text");
+            lockscreen();
+            $.ajax({
+                method: "post",
+                url: "passageHandler.cgi",
+                data:{
+                    passageType,
+                    docno: doc_id,
+                    subtopic_id: sid,
+                    passage_name: encodeURIComponent(ptext)
+                },
+                success: function(response){
+                    addPassageCallBack(passageType,ptext, $target, response.trim(), doc_id);
+                    getCount();
+                },
+                complete: function(){
+                    $(".screen-cover").remove();
+                }
+            });
+        }
     }
-	}
 };
 
 function dragstartfunc(){
@@ -739,7 +727,7 @@ function dragendfunc(){
     $dragging = null;
 };
 
-function addPassageCallBack(ptext, $target, response, doc_id){
+function addPassageCallBack(passageType,ptext, $target, response, doc_id){
     if (response == -1) {
 	    alertdialog(12);
     } else {
@@ -756,12 +744,7 @@ function addPassageCallBack(ptext, $target, response, doc_id){
                 </div>');
         $passage.on("dragstart",dragstartfunc);
         $passage.on("dragend",dragendfunc);
-        //if ((typeof ptext) == "string") { //text is dragged
-        //    $passage.find('p').text(ptext);
-        //} else { //image is dragged
-        //    $passage.find("#image").append(ptext.clone());
-        //}
-        if ((ptext.slice(-4) == ".jpg" || ptext.slice(-4) == ".png" || ptext.slice(-4) == ".gif")||ptext.startsWith("http")) {
+        if (passageType == "I") {
             $img = $("<img src = '"+ptext+"'>")
             $passage.find("#image").append($img);
         } else {

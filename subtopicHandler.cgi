@@ -59,7 +59,6 @@ def subtopicHandle(form, environ):
                     topic_name, = atn_db.cur.fetchone()
                     try: mylog.log_add_subtopic(username, topic_id, topic_name, response, subtopic_name)
                     except: pass
-
                     atn_db.commit()
 
         print('Content-Type: text/plain\r\n')

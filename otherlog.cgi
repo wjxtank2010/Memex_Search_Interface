@@ -13,9 +13,6 @@ def logHandle(form, environ):
     result = cookieAuthentication(environ)
     if not result: return
     userid, username, usercookie = result
-    f = open("a.txt","w")
-    f.write("haha")
-    f.close()
     topic_id = form.getvalue('topic_id', None)
     docno = form.getvalue('docno', None)
     mode = form.getvalue('source', None)
@@ -26,9 +23,7 @@ def logHandle(form, environ):
     hstring = form.getvalue('hstring',None)
     color = form.getvalue('color', None)
     subtopic_id = form.getvalue('subtopic_id', None)
-    f = open("b.txt","w")
-    f.write("haha")
-    f.close()
+
     #if mode == 'L': source = 'lemur'
     #elif mode == 'S': source = 'solr'
     #elif mode == 'T': source = 'terrier'
@@ -91,6 +86,8 @@ def logHandle(form, environ):
         atn_db = DBHandler(db_path.atn)
         atn_db.cur.execute('SELECT subtopic_name FROM subtopic WHERE subtopic_id=?', [int(subtopic_id)])
         subtopic_name, = atn_db.cur.fetchone()
+        atn_db.cur.execute('UPDATE topic SET para=?,mode=? WHERE topic_id=?', [query,mode,int(topic_id)])
+        atn_db.commit()
         try: mylog.log_findmore(username, color, topic_id, subtopic_id, subtopic_name)
         except: pass
         atn_db.close()

@@ -2,7 +2,7 @@ import sys
 sys.path.insert(0,"/data2/apps/anaconda2/lib/python2.7/site-packages")
 sys.path.append("../../../")
 from database import DBHandler
-import certifi,os,yaml,re,json
+import certifi,os,yaml,re,json,urllib
 from fuzzywuzzy import fuzz
 from elasticsearch import Elasticsearch,RequestsHttpConnection
 
@@ -12,9 +12,7 @@ cur = atn_db.cur
 atn_db.cur.execute("SELECT para from topic where topic_id=?",[topicId])
 para, = atn_db.cur.fetchone()
 query = para.split("&")[-1]
-query = re.sub("%3A",":",query)
-query = re.sub("%3B",";",query)
-query = re.sub("%20"," ",query)
+query = urllib.unquote(query)
 must_list = []
 should_list = []
 query_body = {"size":500,"query":{"bool":{"must":[{"match":{"raw_content": ""}}],"should":[]}} }
