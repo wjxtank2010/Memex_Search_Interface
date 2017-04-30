@@ -313,12 +313,13 @@ function move(opnum){
                     if (opnum == 'r') alertdialog(11);
                     if (opnum == 'd') alertdialog(13);
                 }
-                //else if (response == "0"){
-                //    goback();
-                //}
-                //else{
-                    //doc_id = response.trim();
-                    //$("#lemurbox").attr("src", home_prefix+url+'?e='+response)
+                else if (response == "0"){
+                    goback();
+                }
+                else{
+                    doc_id = response.trim();
+                    $("#lemurbox").attr("src", home_prefix+url+'?e='+response)
+                }
                 //    if (opnum == 'd') {
 			    //alertdialog(15);
 		//    } else {
@@ -349,7 +350,7 @@ function switchDoc(op) {
                 $(".screen-cover").remove();
             }
             else if (response == "0"){
-                goback();
+                //do nothing
             }
             else{
                 doc_id = response.trim();
@@ -386,10 +387,10 @@ function prepareTopbar(){
         move('d');
     });
     $("#docnext").click(function(){
-        switchDoc('n');
+        move('n');
     });
     $("#docprev").click(function(){
-        switchDoc('p');
+        move('p');
     });
 
     $("#assesshappy").tooltip();

@@ -31,7 +31,6 @@ def moveHandle(form, environ):
         if not exist_check:
             atn_db.insert('filter_list',[topic_id, docno, ['r','d'].index(signal)+2])
             atn_db.commit()
-	    print('0')
         else:
             print('-1')
             atn_db.close()
@@ -41,14 +40,8 @@ def moveHandle(form, environ):
         #userid, topic_name, domain_id= atn_db.cur.fetchone()
         
         #corpus = ['EBOLA', 'POLAR', 'WEAPON'][domain_id-1]
-        #if signal == 'd': cmd = 'DUPLICATE'
-        #else: cmd = 'IRRELEVANT'
-        #m1 = m2 = ''
-        #try: 
-        #    m1, m2 = postNugget.discardDoc(userid, topic_id, corpus, cmd, docno)
-        #except: 
-        #    pass
-
+        cmd = ''
+        if signal == 'd': cmd = 'DUPLICATE'
         try: mylog.log_discard_doc(username, cmd.lower(), str(topic_id), docno)
         except: pass
     
@@ -81,20 +74,19 @@ def moveHandle(form, environ):
     #    print("0")
     table = 'search_list'
     tmpresult = None
-    if signal in ['p','n']:
-        atn_db.cur.execute('SELECT round FROM %s WHERE topic_id=? AND docno=? ORDER BY round DESC LIMIT 1'%(table),[topic_id,docno])
-        res = atn_db.cur.fetchone()
-        if res:
-            round, = res
-            if signal == 'p':
-                atn_db.cur.execute('SELECT row_num, docno FROM %s WHERE topic_id=? AND round=? AND row_num < (SELECT row_num FROM %s WHERE topic_id=? AND docno=?) ORDER BY row_num DESC LIMIT 1'%(table, table), [topic_id,round,topic_id, docno])
-                try: mylog.log_prev_doc(username, str(topic_id), docno)
-                except: pass
-            else:
-                atn_db.cur.execute('SELECT row_num, docno FROM %s WHERE topic_id=? AND round=? AND row_num > (SELECT row_num FROM %s WHERE topic_id=? AND docno=?) LIMIT 1'%(table, table), [topic_id, round, topic_id, docno])
-                try: mylog.log_next_doc(username, str(topic_id), docno)
-                except: pass
-            tmpresult = atn_db.cur.fetchone()
+    atn_db.cur.execute('SELECT round FROM %s WHERE topic_id=? AND docno=? ORDER BY round DESC LIMIT 1'%(table),[topic_id,docno])
+    res = atn_db.cur.fetchone()
+    if res:
+        round, = res
+        if signal == 'p': #switch to the previous doc
+            atn_db.cur.execute('SELECT row_num, docno FROM %s WHERE topic_id=? AND round=? AND row_num < (SELECT row_num FROM %s WHERE topic_id=? AND docno=?) ORDER BY row_num DESC LIMIT 1'%(table, table), [topic_id,round,topic_id, docno])
+            try: mylog.log_prev_doc(username, str(topic_id), docno)
+            except: pass
+        else: #switch to the next doc either by clicking next or marking the current doc irrelavant or duplicate
+            atn_db.cur.execute('SELECT row_num, docno FROM %s WHERE topic_id=? AND round=? AND row_num > (SELECT row_num FROM %s WHERE topic_id=? AND docno=?) LIMIT 1'%(table, table), [topic_id, round, topic_id, docno])
+            try: mylog.log_next_doc(username, str(topic_id), docno)
+            except: pass
+        tmpresult = atn_db.cur.fetchone()
 
     if signal in ['d','r']:
         atn_db.cur.execute('DELETE FROM search_list WHERE topic_id=? AND docno=?',[topic_id, docno])
