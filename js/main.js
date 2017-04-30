@@ -450,7 +450,7 @@ function gufindmore(e){
                 color: 'pink',
                 subtopic_id: sid,
                 flag: 'findmore',
-                query:encodeURIComponent(thequery),
+                query: thequery,
             }
         });
     }
@@ -653,7 +653,7 @@ function addPassage(event){
                                 mode: passageType,
                                 docno: doc_id,
                                 subtopic_id: sid,
-                                passage_name: encodeURIComponent(ptext)
+                                passage_name: ptext
                             },
                             success: function(response){
                                 addPassageCallBack(passageType,ptext, $target, response.trim(), doc_id);
@@ -675,7 +675,7 @@ function addPassage(event){
                     mode: passageType,
                     docno: doc_id,
                     subtopic_id: sid,
-                    passage_name: encodeURIComponent(ptext)
+                    passage_name: ptext
                 },
                 success: function(response){
                     addPassageCallBack(passageType,ptext, $target, response.trim(), doc_id);
@@ -705,10 +705,11 @@ function addPassage(event){
                     passageType,
                     docno: doc_id,
                     subtopic_id: sid,
-                    passage_name: encodeURIComponent(ptext)
+                    passage_name: ptext
                 },
                 success: function(response){
                     addPassageCallBack(passageType,ptext, $target, response.trim(), doc_id);
+                    document.getElementById('lemurbox').contentWindow.getSelection().empty();
                     getCount();
                 },
                 complete: function(){
