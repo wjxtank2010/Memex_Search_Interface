@@ -17,14 +17,13 @@ def passageHandle(form, environ):
         userid, username, usercookie = result
 
         docno        = form.getvalue("docno", 0)
-        offset_start = form.getvalue("offset_start", 0)
-        offset_end   = form.getvalue("offset_end", 0)
         passage_name = form.getvalue("passage_name", None)
         subtopic_id  = form.getvalue("subtopic_id", None)
+        mode = form.getvalue("subtopic_id",None)
 
         atn_db  = DBHandler(db_path.atn)
 
-        atn_db.insert('passage',[None,passage_name.decode('UTF-8'),docno,offset_start,offset_end,0,int(subtopic_id),0])
+        atn_db.insert('passage',[None,passage_name.decode('UTF-8'),docno,mode,int(subtopic_id),0])
         passage_id = atn_db.cur.lastrowid #get the row id as the passage id
 
         atn_db.cur.execute('SELECT topic_id, subtopic_name FROM subtopic WHERE subtopic_id=?',[int(subtopic_id)])
@@ -34,13 +33,13 @@ def passageHandle(form, environ):
         atn_db.cur.execute('SELECT username FROM user WHERE userid=?',[userid])
         username, = atn_db.cur.fetchone()
 
-        corpus = ['EBOLA', 'POLAR', 'WEAPON'][domain_id-1]
+        corpus = 'elaticsearch'
 
-        m1 = m2 = ''
-        try: 
-            m1, m2 = postNugget.postNugget(userid, topic_id, int(subtopic_id), corpus, passage_id, docno, passage_name)
-        except: 
-            pass
+#        m1 = m2 = ''
+#        try:
+#            m1, m2 = postNugget.postNugget(userid, topic_id, int(subtopic_id), corpus, passage_id, docno, passage_name)
+#        except:
+#            pass
 
         atn_db.cur.execute('SELECT * FROM filter_list WHERE topic_id=? AND docno=?', [topic_id, docno])
 

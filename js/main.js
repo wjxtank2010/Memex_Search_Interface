@@ -613,69 +613,69 @@ function addPassage(event){
 //        }
         //var img = $("#lemurbox").contents().find("img[src='"+data+"']") //find the image that is dragged
 	var start = 0;
-        var end = 40;
-        var $target = $(event.target).closest(".droppable");
-        var sid = $target.parent().data("subtopic_id");
+    var end = 40;
+    var $target = $(event.target).closest(".droppable");
+    var sid = $target.parent().data("subtopic_id");
 	if ($target.find(".passage") != 0) {
+        $.ajax({
+            url: "countHandler.cgi",
+            data:{
+                topic_id: tid
+            },
+            success: function(response){
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var name = "";
+            for( var i=0; i < 5; i++ )
+                name += possible.charAt(Math.floor(Math.random() * possible.length));
             $.ajax({
-                url: "countHandler.cgi",
-                data:{
-                    topic_id: tid
+                method: "POST",
+                url: "subtopicHandler.cgi",
+                data: {
+                    userid : uid,
+                    topic_id : tid,
+                    subtopic_name : name
                 },
                 success: function(response){
-		    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                    var name = "";
-		    for( var i=0; i < 5; i++ )
-		        name += possible.charAt(Math.floor(Math.random() * possible.length));
-		    $.ajax({
-       		        method: "POST",
-        		url: "subtopicHandler.cgi",
-        		data: {
-            		    userid : uid,
-            	    	    topic_id : tid,
-          	            subtopic_name : name
-        		},
-        		success: function(response){
-        		    if (response == 0){
-			        alertdialog(3);
-    			    }
-   			    else if (response == -1){
-				alertdialog(7);
-    			    }
-    			    else{
-        		    	$dropbox = newDropbox(name, response);
-       				$("#dropbox_list").prepend($dropbox).hide().fadeIn();
-				if ($dropbox.find("h1").width() >= 279){
-	    			    $dropbox.find("h1").attr("title",$dropbox.find("h1").text());
-				}
-        			$("#cancel_add_sub").trigger("click");
-    			    }
-			    $target = $dropbox.find(".droppable");
-			    sid = $dropbox.data("subtopic_id");
-			    //$target = $target.closest("#dropbox_list").find(".dropbox").first().find(".droppable");
-			    lockscreen();
-       			    $.ajax({
-            			method: "post",
-            			url: "passageHandler.cgi",
-            			data:{
-                		    docno: doc_id,
-                		    offset_start: start,
-                		    offset_end: end,
-               			    subtopic_id: sid,
-                		    passage_name: ptext
-            			},
-            			success: function(response){
-                		    addPassageCallBack(ptext, $target, response.trim(), doc_id);
-                		    getCount();
-           			},
-            			complete: function(){
-                		$(".screen-cover").remove();
-           			}
-        		   });
-			}
-    		   });
-		}
-            });
+                    if (response == 0){
+                        alertdialog(3);
+                    }
+                    else if (response == -1){
+                        alertdialog(7);
+                    }
+                    else{
+                        $dropbox = newDropbox(name, response);
+                        $("#dropbox_list").prepend($dropbox).hide().fadeIn();
+                        if ($dropbox.find("h1").width() >= 279){
+                            $dropbox.find("h1").attr("title",$dropbox.find("h1").text());
+                        }
+                        $("#cancel_add_sub").trigger("click");
+                    }
+                    $target = $dropbox.find(".droppable");
+                    sid = $dropbox.data("subtopic_id");
+                    //$target = $target.closest("#dropbox_list").find(".dropbox").first().find(".droppable");
+                    lockscreen();
+                    $.ajax({
+                        method: "post",
+                        url: "passageHandler.cgi",
+                        data:{
+                            docno: doc_id,
+                            offset_start: start,
+                            offset_end: end,
+                            subtopic_id: sid,
+                            passage_name: ptext
+                        },
+                        success: function(response){
+                            addPassageCallBack(ptext, $target, response.trim(), doc_id);
+                            getCount();
+                        },
+                        complete: function(){
+                        $(".screen-cover").remove();
+                    }
+                   });
+            }
+           });
+    }
+        });
 	}else {
 	    $.ajax({
             method: "post",
