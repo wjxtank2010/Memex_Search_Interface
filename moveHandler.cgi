@@ -93,8 +93,8 @@ def moveHandle(form, environ):
         atn_db.commit()
 
     if tmpresult:
-        nextdoc = tmpresult
-        print(nextdoc)
+        nextdoc, = tmpresult
+        print(str(nextdoc))
         # update topic last doc
         atn_db.cur.execute('UPDATE topic SET docno=? WHERE topic_id=?', [nextdoc, topic_id])
         atn_db.commit()
