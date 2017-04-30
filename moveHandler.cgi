@@ -79,11 +79,11 @@ def moveHandle(form, environ):
     if res:
         round,row_num = res
         if signal == 'p': #switch to the previous doc
-            atn_db.cur.execute('SELECT docno FROM %s WHERE row_num=? AND round=?'%(table), [row_num-1])
+            atn_db.cur.execute('SELECT docno FROM %s WHERE row_num=? AND round=?'%(table), [row_num-1,round])
             try: mylog.log_prev_doc(username, str(topic_id), docno)
             except: pass
         else: #switch to the next doc either by clicking next or marking the current doc irrelavant or duplicate
-            atn_db.cur.execute('SELECT docno FROM %s WHERE row_num=? AND round=?'%(table), [row_num+1])
+            atn_db.cur.execute('SELECT docno FROM %s WHERE row_num=? AND round=?'%(table), [row_num+1,round])
             try: mylog.log_next_doc(username, str(topic_id), docno)
             except: pass
         tmpresult = atn_db.cur.fetchone()
