@@ -314,7 +314,7 @@ function move(opnum){
                     if (opnum == 'd') alertdialog(13);
                 }
                 else if (response == "0"){
-                    goback();
+                    //goback();
                 }
                 else{
                     doc_id = response.trim();
