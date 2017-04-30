@@ -299,7 +299,7 @@ function cancelTopic(){
 };
 
 function deleteTopic(){
-    if ( (tname != '') && confirm("are you sure you want to delete this topic?") == true) ){
+    if ( (tname != '') && confirm("are you sure you want to delete this topic?") == true ){
 	    $.ajax({
             method : "post",
             url: "./deleteHandler.cgi",
