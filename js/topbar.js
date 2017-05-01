@@ -74,35 +74,43 @@ function runQuery(){
 function structureQuery(field){ //format of structure query:  fieldName:value;   ex.  phone:2021234567
     mode = "S" //abbreviation for structured query
     q = "" //query
+    var N = 0; //number of query parts
     if (field == "phone") {
         if ($("#phoneInput").val()) {
             q = "phone:"+$("#phoneInput").val()+";";
+            N += 1;
         }
     } else if (field == "email") {
         if ($("#emailInput").val()) {
             q = "email:"+$("#emailInput").val()+";"
+            N += 1;
         }
     } else if (field == "name") {
         if ($("#nameInput").val()) {
             q = "name:"+$("#nameInput").val()+";"
+            N += 1;
         }
     } else if (field == "socialMedia") {
         if (("#socialMediaInput").val() && $("#socialMediaInput").val() != "-- select an social media --") {
             q += "socialMedia:"+$("#socialMediaInput").val()+";";
+            N += 1;
         }
         if ($("#socialMediaIDInput").val())  {
             q += "socialMediaID:"+$("#socialMediaIDInput").val()+";";
+            N += 1;
         }
     } else if (field == "reviewSite") {
         if ($("#reviewSiteInput").val() &&  $("#reviewSiteInput").val() != "-- select a review site --")  {
             q += "reviewSite:"+$("#reviewSiteInput").val()+";";
+            N += 1;
         }
         if ($("#reviewSiteIDInput").val())  {
             q += "reviewSiteID:"+$("#reviewSiteIDInput").val()+";";
+            N += 1;
         }
     }
     if (q) {
-        para = "T=" + tid + "&Mode="+ mode+ "&q="+encodeURIComponent(q)
+        para = "T=" + tid + "&Mode="+ mode+ "&N="+ N + "&q="+q;
         search_signal = 1;
         $("#control_panel_2").hide();
         $("#highlight input", parent.documenqt).val("");
@@ -117,84 +125,9 @@ function structureQuery(field){ //format of structure query:  fieldName:value;  
                 flag: 'query'
             },
             success:function(response) {
-                $("#lemurbox").attr("src", home_prefix + url + "?" + para);
+                $("#lemurbox").attr("src", home_prefix + url + "?" + encodeURIComponent(para));
             }
         })
-    }
-}
-
-function phoneSearch(){
-    mode = "S";
-    para = "T=" + tid + "Mode="+ mode+ "&q=" + encodeURIComponent("phone:"+$("#phoneInput").val()+";");
-    search_signal = 1;
-    $("#control_panel_2").hide();
-    $("#highlight input", parent.document).val("");
-    lockscreen();
-    $("#lemurbox").attr("src", home_prefix + url + "?" + para);
-}
-
-function emailSearch() {
-    mode = "T";
-    query = "email:"+$("#emailInput").val()+";"
-    para = "T=" + tid + "&q=" + "" + encodeURIComponent(query);
-    search_signal = 1;
-    url = dict["domains"][1].replace("search","elasticsearch");
-    $("#control_panel_2").hide();
-    $("#highlight input", parent.document).val("");
-    lockscreen();
-    $("#lemurbox").attr("src", home_prefix + url + "?" + para);	
-
-}
-
-function nameSearch() {
-    mode = "T";
-    query = "name:"+$("#nameInput").val()+";"
-    para = "T=" + tid + "&q=" + "" + encodeURIComponent(query);
-    search_signal = 1;
-    url = dict["domains"][1].replace("search","elasticsearch");
-    $("#control_panel_2").hide();
-    $("#highlight input", parent.document).val("");
-    lockscreen();
-    $("#lemurbox").attr("src", home_prefix + url + "?" + para);
-}
-
-function socialMediaSearch() {
-    mode = "T";
-    query = "";
-    if (("#socialMediaInput").val() && $("#socialMediaInput").val() != "-- select an social media --")  {
-        query += "socialMedia:"+$("#socialMediaInput").val()+";";
-    }
-    if ($("#socialMediaIDInput").val())  {
-        query += "socialMediaID:"+$("#socialMediaIDInput").val()+";";
-    }
-    if (query) {
-        para = "T=" + tid + "&q=" + "" + encodeURIComponent(query);
-        search_signal = 1;
-        url = dict["domains"][1].replace("search","elasticsearch");
-        $("#control_panel_2").hide();
-        $("#highlight input", parent.document).val("");
-        lockscreen();
-        $("#lemurbox").attr("src", home_prefix + url + "?" + para);
-    }
-}
-
-function reviewSiteSearch() {
-    mode = "T";
-    query = ""
-    if ($("#reviewSiteInput").val() &&  $("#reviewSiteInput").val() != "-- select a review site --")  {
-        query += "reviewSite:"+$("#reviewSiteInput").val()+";";
-    }
-    if ($("#reviewSiteIDInput").val())  {
-        query += "reviewSiteID:"+$("#reviewSiteIDInput").val()+";";
-    }
-    if (query) {
-        para = "T=" + tid + "&q=" + "" + encodeURIComponent(query);
-        search_signal = 1;
-        url = dict["domains"][1].replace("search","elasticsearch");
-        $("#control_panel_2").hide();
-        $("#highlight input", parent.document).val("");
-        lockscreen();
-        $("#lemurbox").attr("src", home_prefix + url + "?" + para);
     }
 }
 

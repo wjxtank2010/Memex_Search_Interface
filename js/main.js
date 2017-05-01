@@ -72,10 +72,18 @@ function lemurBoxJump(){
 }
 
 function getQuery(){
-    if (mode != 'N') {return;} //update query box only if it is normal query
-    var tmp = para.split("q=");
-    if (tmp.length<=1) {return;}
-    $("#control_panel input").val(decodeURIComponent(tmp[1]).replace(/\+/g," "));
+    if (mode == 'N') { //update query box only if it is normal query
+        var tmp = para.split("q=");
+        if (tmp.length<=1) {return;}
+        var queryStr = tmp.split("box:")
+        if (queryStr.length<=1) {return;}
+        $("#control_panel input").val(decodeURIComponent(queryStr[1]).replace(/\+/g," "));
+    } else if (mode == "S") {
+        //fill in structure fields
+
+    } else {
+        return;
+    }
 }
 
 function parse(){
