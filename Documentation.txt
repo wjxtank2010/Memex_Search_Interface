@@ -14,7 +14,7 @@ q: query parameters, separated by ';' if there are multiple parts
 
 
 2. Structure search:
-	ex. T=2&Mode=S&q=hairColor:brown,black;name:elise;
+	ex. T=2&Mode=S&N=2&q=hairColor:brown,black;name:elise;
 
 
 3. Image search:(subtopic findmore)
