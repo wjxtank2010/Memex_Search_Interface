@@ -68,17 +68,11 @@ def logHandle(form, environ):
         #except: pass
         atn_db.close()
     elif flag == 'query':
-        f = open("d.txt","w")
-        f.write("haha")
-        f.close()
         atn_db = DBHandler(db_path.atn)
         atn_db.cur.execute('SELECT topic_name FROM topic WHERE topic_id=?', [int(topic_id)])
         topic_name, = atn_db.cur.fetchone()
         atn_db.cur.execute('UPDATE topic SET para=?,mode=? WHERE topic_id=?', [query,mode,int(topic_id)])
         atn_db.commit()
-        f = open("e.txt","w")
-        f.write("haha")
-        f.close()
         try: mylog.log_query(username, source, topic_id, topic_name, query)
         except: pass
         atn_db.close()

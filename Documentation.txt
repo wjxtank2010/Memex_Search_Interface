@@ -1,0 +1,26 @@
+Document:
+
+
+
+
+Search: 
+format:  T=tid&Mode=mode&N=int&q=query
+T:topic ID
+Mode: search mode
+N: number of query parts(1 for querybox search,image search, text search, >1 for structure search)
+q: query parameters, separated by ';' if there are multiple parts
+1. Normal search(Querybox search):
+	ex.  T=2&Mode=N&q=box:haha;
+
+
+2. Structure search:
+	ex. T=2&Mode=S&q=hairColor:brown,black;name:elise;
+
+
+3. Image search:(subtopic findmore)
+	ex. T=2&Mode=I&q=imgURL
+
+
+4. Text search:(subtopic findmore)
+	ex. T=2&Mode=T&q=text
+

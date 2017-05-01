@@ -1,6 +1,8 @@
 __author__ = 'infosense'
 import sys
 sys.path.append("/data2/home/jw1498/.conda/envs/myvpy/lib/python2.7/site-packages")
+sys.path.append("../../../")
+from database import DBHandler
 import numpy as np
 from datetime import datetime
 import urllib,json,os,csv,cv2
@@ -121,30 +123,41 @@ class Searcher:
 if __name__ == "__main__" :
     #system call from IndriSearchInterface::performSearch with 'python image_search.py'
     queried_img_path = "image_log" #cache queried downloaded images
-    with open("img_url_log") as f:
-        #everytime a image query is performed, the image url is written into the last line of the imgLog file first.
-        lines = f.readlines()
-        if lines:
-            query_img_url = lines[-1]
-            if download_photo(query_img_url,"./","query"):
-                # initialize the image descriptor
-                cd = ColorDescriptor((8, 12, 3))
-                # load the query image and describe it
-                query = cv2.imread("query")
-		features = cd.describe(query)
-                # perform the search
-                searcher = Searcher("a.csv")
-		#start = datetime.now()
-                results = searcher.search(features)
-		#print((datetime.now()-start).seconds)
-                # display the query
-                #cv2.imshow("Query", query)
-		results = map(lambda k:k[1].split(".")[0].split("_")[0],results)
-                # loop over the results
-                for resultID in list(set(results)):
-                    #load the result image and display it
-		    print(resultID)
-                    # result = cv2.imread(args["result_path"] + "/" + resultID)
-                    # cv2.imshow("Result", result)
-                    # cv2.waitKey(0)
-		os.system("rm -f query")
+    topicId = int(sys.argv[1])
+    atn_db  = DBHandler("../../../database/Memex.db")
+    cur = atn_db.cur
+    atn_db.cur.execute("SELECT para from topic where topic_id=?",[topicId])
+    para, = atn_db.cur.fetchone()
+    query = para.split("&")[-1]
+    query_img_url = urllib.unquote(query)
+    if download_photo(query_img_url,"./","query"):
+        # initialize the image descriptor
+        cd = ColorDescriptor((8, 12, 3))
+        # load the query image and describe it
+        query = cv2.imread("query")
+        features = cd.describe(query)
+        # perform the search
+        searcher = Searcher("a.csv")
+        #start = datetime.now()
+        results = searcher.search(features)
+        #print((datetime.now()-start).seconds)
+        # display the query
+        #cv2.imshow("Query", query)
+        results = map(lambda k:k[1].split(".")[0].split("_")[0],results)
+        cur.execute("SELECT round from search_list where topic_id=? ORDER BY round DESC LIMIT 1",[topicId])
+        res = cur.fetchone()
+        round = 0
+        if res:
+            round, = res
+        round += 1
+        # loop over the results
+        for resultID in list(set(results)):
+            #load the result image and display it
+            print(resultID)
+            cur.execute('INSERT INTO %s VALUES(%s)' %("search_list", "?,?,?,?"), (None,topicId,round,resultID))
+            # result = cv2.imread(args["result_path"] + "/" + resultID)
+            # cv2.imshow("Result", result)
+            # cv2.waitKey(0)
+        atn_db.commit()
+        atn_db.close()
+        os.system("rm -f query")

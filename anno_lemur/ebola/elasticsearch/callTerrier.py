@@ -18,65 +18,58 @@ should_list = []
 query_body = {"size":500,"query":{"bool":{"must":[{"match":{"raw_content": ""}}],"should":[]}} }
 query_dic = {}
 if query.endswith(";"):
-	age_min = 0
-	age_max = 0
-	height_min = 0
-	height_max = 0
-	query_terms = query[:-1].split(";")
-	query_dic = {x.split(":")[0]:x.split(":")[1] for x in query_terms}
-	feature_should_search_map = {"name":"name","hairColor":"hair","eyeColor":"eye","nationality":"nationality","ethnicity":"ethnicity","reviewSite":"review","reviewSiteId":"review","email":"email","phone":"phone","state":"","city":"","price":"","multiple_providers":"","socialMedia":"","socialMediaId":"","services":"","height":"height","weight":"weight","post_date":"posted"}
-	for key in query_dic:
-		if key == "phone":
-			#phone = re.sub("\D","",query_dic[key])
-			#must_list.append(phone[:3])
-			#must_list.append(phone[3:6])
-			#must_list.append(phone[6:])
-			#should_list.append("("+phone[:3]+")"+phone[3:6]+"-"+phone[6:])
-			#should_list.append(phone[:3]+"-"+phone[3:6]+"-"+phone[6:])
-			#should_list.append("phone")
-			pass
-		elif key == "age" or key == "height":
-			pass
-		#elif key == "ethnicity":
-		#	pass
-		else:
-			must_list.append(query_dic[key])
-	if "age" in query_dic:
-		age_min = int(query_dic["age"][:2])
-		age_max = int(query_dic["age"][2:])
-		should_list.append("age")
-	if "height" in query_dic:
-		height_min = int(query_dic["height"][:3])
-		height_max = int(query_dic["height"][3:])
-		should_list.append("height")
-	if must_list:
-		query_body["query"]["bool"]["must"][0]["match"]["raw_content"] = " ".join(must_list)
+age_min = 0
+age_max = 0
+height_min = 0
+height_max = 0
+query_terms = query[:-1].split(";")
+query_dic = {x.split(":")[0]:x.split(":")[1] for x in query_terms}
+feature_should_search_map = {"name":"name","hairColor":"hair","eyeColor":"eye","nationality":"nationality","ethnicity":"ethnicity","reviewSite":"review","reviewSiteId":"review","email":"email","phone":"phone","state":"","city":"","price":"","multiple_providers":"","socialMedia":"","socialMediaId":"","services":"","height":"height","weight":"weight","post_date":"posted"}
+for key in query_dic:
+	if key == "phone":
+		pass
+	elif key == "age" or key == "height":
+		pass
+	#elif key == "ethnicity":
+	#	pass
 	else:
-		query_str = ""
-		if "age" in query_dic:
-			query_str += "age"
-		if "height" in query_dic:
-			query_str += "height"
-		query_body["query"]["bool"]["must"][0]["match"]["raw_content"] = query_str
-	#should_arr = []
-	# for word in should_list:
-	# 	dic = {}
-	# 	dic["match"] = {}
-	# 	dic["match"]["raw_content"] = word
-	# 	should_arr.append(dic)
-	#query_body["query"]["bool"]["should"] = should_arr
-	if "phone" in query_dic:
-		phone_number = re.sub("\D","",query_dic["phone"])
-		query_body["query"]["bool"]["must"].append({"match":{"phone":phone_number }})
-	if "age" in query_dic:
-		query_body["query"]["bool"]["must"].append({"range" : {"age" : {"gte" : age_min,"lte" : age_max}}})
-	if "height" in query_dic:
-		query_body["query"]["bool"]["must"].append({"range" : {"height" : {"gte" : height_min,"lte" : height_max}}})
-	raw_content_str = query_body["query"]["bool"]["must"][0]
-	if not raw_content_str["match"]["raw_content"]:
-		query_body["query"]["bool"]["must"].pop(0)
+		must_list.append(query_dic[key])
+if "age" in query_dic:
+	age_min = int(query_dic["age"][:2])
+	age_max = int(query_dic["age"][2:])
+	should_list.append("age")
+if "height" in query_dic:
+	height_min = int(query_dic["height"][:3])
+	height_max = int(query_dic["height"][3:])
+	should_list.append("height")
+if must_list:
+	query_body["query"]["bool"]["must"][0]["match"]["raw_content"] = " ".join(must_list)
 else:
-	query_body["query"]["bool"]["must"][0]["match"]["raw_content"] = query
+	query_str = ""
+	if "age" in query_dic:
+		query_str += "age"
+	if "height" in query_dic:
+		query_str += "height"
+	query_body["query"]["bool"]["must"][0]["match"]["raw_content"] = query_str
+#should_arr = []
+# for word in should_list:
+# 	dic = {}
+# 	dic["match"] = {}
+# 	dic["match"]["raw_content"] = word
+# 	should_arr.append(dic)
+#query_body["query"]["bool"]["should"] = should_arr
+if "phone" in query_dic:
+	phone_number = re.sub("\D","",query_dic["phone"])
+	query_body["query"]["bool"]["must"].append({"match":{"phone":phone_number }})
+if "age" in query_dic:
+	query_body["query"]["bool"]["must"].append({"range" : {"age" : {"gte" : age_min,"lte" : age_max}}})
+if "height" in query_dic:
+	query_body["query"]["bool"]["must"].append({"range" : {"height" : {"gte" : height_min,"lte" : height_max}}})
+raw_content_str = query_body["query"]["bool"]["must"][0]
+if not raw_content_str["match"]["raw_content"]:
+	query_body["query"]["bool"]["must"].pop(0)
+# else:
+# 	query_body["query"]["bool"]["must"][0]["match"]["raw_content"] = query
 a = open("test.txt","w")
 a.write(str(query_body))
 a.close()
@@ -116,7 +109,6 @@ res = cur.fetchone()
 round = 0
 if res:
 	round, = res
-	round = int(round)
 round += 1
 for documentId in results:
 	#print((None,topicId,round,documentId))

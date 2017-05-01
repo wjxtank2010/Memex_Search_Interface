@@ -46,7 +46,7 @@ function runQuery(){
     mode = "N" //search from query box is normal search
     url = dict["domains"][1]
     level = 'L';
-    para = "T=" + tid + "&Mode="+mode+"&q=" + encodeURIComponent($("#querybox").val());
+    para = "T=" + tid + "&Mode="+mode+"&N=1"+"&q=" + "box:"+$("#querybox").val();
     thequery = $("#querybox").val();
     search_signal = 1;
     // ?? set mode or level ??
@@ -60,11 +60,11 @@ function runQuery(){
         data:{
             source: mode,
             topic_id: tid,
-            query: thequery,
+            query: para,
             flag: 'query'
         },
         success:function(response) {
-            $("#lemurbox").attr("src", home_prefix + url + "?" + para);
+            $("#lemurbox").attr("src", home_prefix + url + "?" + encodeURIComponent(para));
         }
     })
     
@@ -102,7 +102,7 @@ function structureQuery(field){ //format of structure query:  fieldName:value;  
         }
     }
     if (q) {
-        para = "T=" + tid + "Mode="+ mode+ "&q="+encodeURIComponent(q)
+        para = "T=" + tid + "&Mode="+ mode+ "&q="+encodeURIComponent(q)
         search_signal = 1;
         $("#control_panel_2").hide();
         $("#highlight input", parent.documenqt).val("");
@@ -113,7 +113,7 @@ function structureQuery(field){ //format of structure query:  fieldName:value;  
             data:{
                 source: mode,
                 topic_id: tid,
-                query: q,
+                query: para,
                 flag: 'query'
             },
             success:function(response) {
@@ -271,7 +271,7 @@ function refineSearch() {
         query += "reviewSiteID:"+$("#reviewSiteIDInput").val()+";";
     }
     if (query) {
-        para = "T=" + tid + "Mode=" + mode+ "&q=" + "" + encodeURIComponent(query);
+        para = "T=" + tid + "&Mode=" + mode+ "&q=" + "" + encodeURIComponent(query);
         search_signal = 1;
         $("#control_panel_2").hide();
         $("#highlight input", parent.document).val("");
@@ -282,7 +282,7 @@ function refineSearch() {
             data:{
                 source: mode,
                 topic_id: tid,
-                query: q,
+                query: para,
                 flag: 'query'
             },
             success:function(response) {
