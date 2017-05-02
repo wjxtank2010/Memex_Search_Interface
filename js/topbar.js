@@ -236,7 +236,7 @@ function refineSearch() {
     }
 
     if (q) {
-        para = "T=" + tid + "&Mode=" + mode+ "&N=" + N + "&q=" + q;
+        para = "T=" + tid + "&Mode=" + mode+ "&N=" + N + "&q=";
         search_signal = 1;
         $("#control_panel_2").hide();
         $("#highlight input", parent.document).val("");
@@ -247,12 +247,12 @@ function refineSearch() {
             data:{
                 source: mode,
                 topic_id: tid,
-                query: para,
+                query: para+q,
                 flag: 'query',
                 lvl:level
             },
             success:function(response) {
-                $("#lemurbox").attr("src", home_prefix + url + "?" + encodeURIComponent(para));
+                $("#lemurbox").attr("src", home_prefix + url + "?" + para+encodeURIComponent(q));
             }
         });
     }
