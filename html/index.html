@@ -41,7 +41,7 @@
                                     <input type="text" name="phone" id="phoneInput" style="width:120px">
                                 </div>
 				<div style="text-align:right;">
-				    <button onclick="structureQuery('phone');" id="ClearClick">Search</button>
+				    <button onclick="singleFieldQuery('phone');" id="ClearClick">Search</button>
 				</div>
                             </div>
                         </section>
@@ -57,7 +57,7 @@
                                     <input type="text" name="email" id="emailInput" style="width:120px">
                                 </div>
 				<div style="text-align:right">
-				    <button onclick="structureQuery('email');" id="ClearClick">Search</button></div>
+				    <button onclick="singleFieldQuery('email');" id="ClearClick">Search</button></div>
                                 </div>
                         </section
                     </div>
@@ -81,7 +81,7 @@
                                     <input type="text" name="name" id="nameInput" style="width:100px">
                                 </div>
 				<div style="text-align:right">
-                                    <button onclick="structureQuery('name');" id="ClearClick">Search</button>
+                                    <button onclick="singleFieldQuery('name');" id="ClearClick">Search</button>
                                 </div>
                             </div>
                         </section>
@@ -133,11 +133,11 @@
                                 <div class="select-wrapper select-wrapper-sm form-control pull-right">
                                     <select class="input-sm" id="ethnicityInput" name="ethnicityValue" onchange="refineSearch()">
                                         <option selected value>-- select an ethnicity --</option>
-                                        <option value="african">African</option>
-                                        <option value="asian">Asian</option>
-                                        <option value="european">European</option>
-                                        <option value="north american">North American</option>
-                                        <option value="south american">South American</option>
+                                        <option value="African">African</option>
+                                        <option value="Asian">Asian</option>
+                                        <option value="European">European</option>
+                                        <option value="North American">North American</option>
+                                        <option value="South American">South American</option>
 					<option value="oceanian">Oceanian</option>
                                     </select>
                                 </div>
@@ -350,20 +350,20 @@
                                 <div class="select-wrapper select-wrapper-sm form-control pull-right">
                                     <select class="input-sm" id="stateInput" name="US-states" onchange="refineSearch()">
                                         <option selected value>-- select a state --</option>
-                    				    <option value="AK">Alaska</option>
-                    				    <option value="AZ">Arizona</option>
-                    				    <option value="AR">Arkansas</option>
-                    				    <option value="CA">California</option>
-                    				    <option value="CO">Colorado</option>
-                    				    <option value="CT">Connecticut</option>
-                    				    <option value="DE">Delaware</option>
-                    				    <option value="DC">District Of Columbia</option>
-                    				    <option value="FL">Florida</option>
-                    				    <option value="GA">Georgia</option>
-                    			    	<option value="HI">Hawaii</option>
-                    				    <option value="ID">Idaho</option>
-                    				    <option value="IL">Illinois</option>
-                    		 		    <option value="IN">Indiana</option>
+                    				    <option value="Alaska">Alaska</option>
+                    				    <option value="Arizona">Arizona</option>
+                    				    <option value="Arkansas">Arkansas</option>
+                    				    <option value="California">California</option>
+                    				    <option value="Colorado">Colorado</option>
+                    				    <option value="Connecticut">Connecticut</option>
+                    				    <option value="Delaware">Delaware</option>
+                    				    <option value="District Of Columbia">District Of Columbia</option>
+                    				    <option value="Florida">Florida</option>
+                    				    <option value="Georgia">Georgia</option>
+                    			    	<option value="Hawaii">Hawaii</option>
+                    				    <option value="Idaho">Idaho</option>
+                    				    <option value="Illinois">Illinois</option>
+                    		 		    <option value="Indiana">Indiana</option>
                                     	<option value="Iowa">Iowa</option>
                                     	<option value="Kansas">Kansas</option>
                                     	<option value="Kentucky">Kentucky</option>
@@ -438,12 +438,12 @@
                                         <option value="Red">Red</option>
                                         <option value="Blue">Blue</option>
                                     </select> -->
-                                    <input type="checkbox" id = "whiteHairBox" name="hairColor" onchange="refineSearch()" value="White"><label style="padding-left:50px;display:inline;">White</label><br>
-                                    <input type="checkbox" id = "blackHairBox" name="hairColor" onchange="refineSearch()" value="Black"><label style="padding-left:50px;display:inline;">Black</label><br>
-                                    <input type="checkbox" id = "brownHairBox" name="hairColor" onchange="refineSearch()" value="Brown"><label style="padding-left:50px;display:inline;">Brown</label><br>
-                                    <input type="checkbox" id = "blondeHairBox" name="hairColor" onchange="refineSearch()" value="Blonde"><label style="padding-left:50px;display:inline;">Blonde</label><br>
-                                    <input type="checkbox" id = "redHairBox" name="hairColor" onchange="refineSearch()" value="Red"><label style="padding-left:50px;display:inline;">Red</label><br>
-                                    <input type="checkbox" id = "blueHairBox" name="hairColor" onchange="refineSearch()" value="Blue"><label style="padding-left:50px;display:inline;">Blue</label><br>
+                                    <input type="checkbox" id = "WhiteHairBox" name="hairColor" onchange="refineSearch()" value="White"><label style="padding-left:50px;display:inline;">White</label><br>
+                                    <input type="checkbox" id = "BlackHairBox" name="hairColor" onchange="refineSearch()" value="Black"><label style="padding-left:50px;display:inline;">Black</label><br>
+                                    <input type="checkbox" id = "BrownHairBox" name="hairColor" onchange="refineSearch()" value="Brown"><label style="padding-left:50px;display:inline;">Brown</label><br>
+                                    <input type="checkbox" id = "BlondeHairBox" name="hairColor" onchange="refineSearch()" value="Blonde"><label style="padding-left:50px;display:inline;">Blonde</label><br>
+                                    <input type="checkbox" id = "RedHairBox" name="hairColor" onchange="refineSearch()" value="Red"><label style="padding-left:50px;display:inline;">Red</label><br>
+                                    <input type="checkbox" id = "BlueHairBox" name="hairColor" onchange="refineSearch()" value="Blue"><label style="padding-left:50px;display:inline;">Blue</label><br>
                                 </div>
                             </div>
                         </section>
@@ -465,12 +465,12 @@
                                         <option value="Green">Green</option>
                                         <option value="Grey">Grey</option>
                                     </select> -->
-                                    <input type="checkbox" id = "brownEyeBox" name="eyecolor" onchange="refineSearch()" value="Brown"> <label style="padding-left:50px;display:inline;">Brown</label><br>
-                                    <input type="checkbox" id = "blackEyeBox" name="eyecolor" onchange="refineSearch()" value="Black"> <label style="padding-left:50px;display:inline;">Black</label><br>
-                                    <input type="checkbox" id = "blueEyeBox"  name="eyecolor" onchange="refineSearch()" value="Blue"> <label style="padding-left:50px;display:inline;">Blue</label><br>
-                                    <input type="checkbox" id = "amberEyeBox" name="eyecolor" onchange="refineSearch()" value="Amber"> <label style="padding-left:50px;display:inline;">Amber</label><br>
-                                    <input type="checkbox" id = "greyEyeBox"  name="eyecolor" onchange="refineSearch()" value="Grey"> <label style="padding-left:50px;display:inline;">Grey</label><br>
-                                    <input type="checkbox" id = "greenEyeBox" name="eyecolor" onchange="refineSearch()" value="Green"> <label style="padding-left:50px;display:inline;">Green</label><br>
+                                    <input type="checkbox" id = "BrownEyeBox" name="eyecolor" onchange="refineSearch()" value="Brown"> <label style="padding-left:50px;display:inline;">Brown</label><br>
+                                    <input type="checkbox" id = "BlackEyeBox" name="eyecolor" onchange="refineSearch()" value="Black"> <label style="padding-left:50px;display:inline;">Black</label><br>
+                                    <input type="checkbox" id = "BlueEyeBox"  name="eyecolor" onchange="refineSearch()" value="Blue"> <label style="padding-left:50px;display:inline;">Blue</label><br>
+                                    <input type="checkbox" id = "AmberEyeBox" name="eyecolor" onchange="refineSearch()" value="Amber"> <label style="padding-left:50px;display:inline;">Amber</label><br>
+                                    <input type="checkbox" id = "GreyEyeBox"  name="eyecolor" onchange="refineSearch()" value="Grey"> <label style="padding-left:50px;display:inline;">Grey</label><br>
+                                    <input type="checkbox" id = "GreenEyeBox" name="eyecolor" onchange="refineSearch()" value="Green"> <label style="padding-left:50px;display:inline;">Green</label><br>
                                 </div>
                             </div>
                         </section>
@@ -526,7 +526,7 @@
                                     <input type="text" name="ID" id="socialMediaIDInput">
                                 </div>
 				<div style="text-align:right;display:inline-block;padding:6px">
-                                    <button onclick="structureQuery('socialMedia');" id="ClearClick">Search</button>
+                                    <button onclick="singleFieldQuery('socialMedia');" id="ClearClick">Search</button>
                                 </div>
                             </div>
                         </section>
@@ -551,7 +551,7 @@
                                     <input type="text" name="ID" id="reviewSiteIDInput">
                                 </div>
 				<div style="text-align:right;display:inline-block;padding:6px">
-                                    <button onclick="structureQuery('reviewSite');" id="ClearClick">Search</button>
+                                    <button onclick="singleFieldQuery('reviewSite');" id="ClearClick">Search</button>
                                 </div>
                             </div>
                         </section>

@@ -72,18 +72,73 @@ function lemurBoxJump(){
 }
 
 function getQuery(){
+    var query_dic = queryParse;
     if (mode == 'N') { //update query box only if it is normal query
-        var tmp = para.split("q=");
-        if (tmp.length<=1) {return;}
-        var queryStr = tmp.split("box:")
-        if (queryStr.length<=1) {return;}
-        $("#control_panel input").val(decodeURIComponent(queryStr[1]).replace(/\+/g," "));
+        $("#control_panel input").val(query_dic["box"].replace(/\+/g," "));
     } else if (mode == "S") {
         //fill in structure fields
-
+        var fieldIDMap = {"phone":"#phoneInput","email":"#emailInput","name":"#nameInput","ethnicity":"#ethnicityInput","nationality":\
+        "#nationalityInput","state":"#stateInput","city":"#cityInput","socialMedia":"#socialMediaInput","socialMediaID":"#socialMediaIDInput",\
+        "reviewSite":"#reviewSiteInput","reviewSiteID":"#reviewSiteIDInput","box":"#querybox"};
+        var query_dic = queryParse;
+        for (key in query_dic) {
+            if (key == "age"){
+                ageLow = parseInt(query_dic[key].substr(0,2));
+                ageHigh = parseInt(query_dic[key].substr(2));
+                $("#ageSlider").slider("values",0,ageLow);
+                $("#ageSlider").slider("values",1,ageHigh);
+                $("#age_range").val(ageLow + " - " + ageHigh);
+                $age = 1;
+            } else if (key == "height") {
+                heightLow = parseInt(query_dic[key].substr(0,2));
+                heightHigh = parseInt(query_dic[key].substr(2));
+                $("#heightSlider").slider("values",0,heightLow);
+                $("#heightSlider").slider("values",1,heightHigh);
+                $("#height_range").val(heightLow + " - " + heightHigh+"cm");
+                $height = 1;
+            } else if (key == "hairColor") {
+                var hairColors = query_dic[key].split(",");
+                for (i=0;i<hairColors.length;i++) {
+                    $("#"+hairColors[i]+"HairBox").prop("checked",true);
+                }
+            } else if (key == "eyeColor") {
+                var eyeColors = query_dic[key].split(",");
+                for (i=0;i<eyeColors.length;i++) {
+                    $("#"+eyeColors[i]+"EyeBox").prop("checked",true);
+                }
+            } else {
+                $(fieldIDMap[key]).val(query_dic[key]);
+            }
+        }
     } else {
         return;
     }
+}
+
+function queryParse() {
+    var queryParts = para.split("&",4);
+    var queryStr = queryParts.join("");
+    if (queryStr.length != para.length) { //when there is more than 3 & in the query
+        queryParts[3] = queryParts[3].substr(2)+para.substr(queryStr.length+3);
+    }
+    var numOfFields = parseInt(queryParts[2].split("=")[1]);
+    if (numOfFields == 0){
+        return {}
+    }
+    var queryField = queryParts[3].split(";",numOfFields);
+    var queryFieldStr = queryField.join("");
+    if (queryFieldStr.length != queryParts[3].length) {
+        queryFieldStr[numOfFields-1] += queryParts[3].substr(queryFieldStr.length+numOfFields-1);
+    }
+    var query_dic = {};
+    for (i=0;i<queryField.length;i++) {
+        keyPair = queryField[i].split(":",2)
+        if (keyPair[0] == "box" && keyPair.join("").length != queryField[i].length) {
+            keyPair[1] += queryField[i].substr(keyPair.join("").length+1)
+        }
+        query_dic[keyPair[0]] = keyPair[1]
+    }
+    return query_dic
 }
 
 function parse(){
@@ -871,7 +926,7 @@ $(document).ready(function(){
     $("#querybox").keypress(function(e){
 	if (e.keyCode == 13) {
 	    e.preventDefault();
-	    runQuery();
+	    singleFieldQuery("box");
 	}
     });
     $("#phoneInput").keypress(function(e){
@@ -915,49 +970,46 @@ $(document).ready(function(){
     getSidebar();
 
     getCount();
-    $( "#ageSlider" ).slider({
-      range: true,
-      min: 10,
-      max: 60,
-      values: [ 20, 40 ],
-      slide: function( event, ui ) {
-        $( "#age_range" ).val($( "#ageSlider" ).slider( "values", 0 ) +
-          " - " + $( "#ageSlider" ).slider( "values", 1 ) );
-      },
-      change:function(event,ui) {
-	    event.preventDefault();
-	    $age = 1;
-	    refineSearch();
-      }
+    $("#ageSlider").slider({
+        range: true,
+        min: 10,
+        max: 60,
+        values: [ 20, 40 ],
+        slide: function(event,ui) {
+            $( "#age_range" ).val(ui.values[0] + " - " + ui.values[1]);
+        },
+        change:function(event,ui) {
+            if (event.originalEvent) { //only trigger when event is from user interaction
+	            event.preventDefault();
+	            $age = 1;
+	            refineSearch();
+	        }
+        }
     });
-    $( "#age_range" ).val($( "#ageSlider" ).slider( "values", 0 ) +
-          " - " + $( "#ageSlider" ).slider( "values", 1 ) ); 
+    $("#age_range").val($("#ageSlider").slider("values",0) + " - " + $("#ageSlider").slider("values",1));
     
     $( "#heightSlider" ).slider({
-      range: true,
-      min: 120,
-      max: 220,
-      values: [ 150, 190 ],
-      slide: function( event, ui ) {
-        $( "#height_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] + "cm");
-	    $height = 1;
-	    refineSearch();
-      }
+        range: true,
+        min: 120,
+        max: 220,
+        values: [ 150, 190 ],
+        slide: function( event, ui ) {
+            $("#height_range").val(ui.values[0] + " - " + ui.values[1] + "cm");
+        },
+        change:function(event,ui) {
+            if (event.originalEvent) { //only trigger when event is from user interaction
+	            event.preventDefault();
+	            $height = 1;
+                refineSearch();
+	        }
+        }
     });
-    //$('.hairbox').change(function() {
-        //if($(this).is(":checked")) {
-        //    var returnVal = confirm("Are you sure?");
-        //    $(this).attr("checked", returnVal);
-       // }
-        //$('#textbox1').val($(this).is(':checked'))
-       
-    //#});
-    $( "#height_range" ).val($( "#heightSlider" ).slider( "values", 0 ) +
-          " - " + $( "#heightSlider" ).slider( "values", 1 ) + "cm");
+    $("#height_range").val($("#heightSlider").slider("values",0) +" - " + $("#heightSlider").slider("values",1) + "cm");
+
     $("#total_count").tooltip();
    
     $(".dialogs").dialog({
-	autoOpen: false,
+	    autoOpen: false,
     });
     
     $("#logout").click(function(e){
@@ -996,7 +1048,7 @@ $(document).ready(function(){
 	if (e.which == 13){
 	    e.preventDefault();
 	    confirmAddTopic();
-	};
+	    };
     });
     
     
@@ -1006,7 +1058,7 @@ $(document).ready(function(){
         if (e.which == 13){
             e.preventDefault();
             confirmEditTopic();
-	};
+	    };
     });    
 
     $("#topic .cancel_topic").click(cancelTopic);

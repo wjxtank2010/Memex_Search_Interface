@@ -42,39 +42,45 @@ function moodFeedback(m){
     }   
 }
 
-function runQuery(){
-    mode = "N" //search from query box is normal search
-    url = dict["domains"][1]
-    level = 'L';
-    para = "T=" + tid + "&Mode="+mode+"&N=1"+"&q=" + "box:"+$("#querybox").val();
-    thequery = $("#querybox").val();
-    search_signal = 1;
-    // ?? set mode or level ??
-    $("#control_panel_2").hide();
-    $("#highlight input", parent.document).val("");
-    lockscreen();
+//function runQuery(){
+//    mode = "N" //search from query box is normal search
+//    url = dict["domains"][1]
+//    level = 'L';
+//    para = "T=" + tid + "&Mode="+mode+"&N=1"+"&q=" + "box:"+$("#querybox").val()+";";
+//    thequery = $("#querybox").val();
+//    search_signal = 1;
+//    // ?? set mode or level ??
+//    $("#control_panel_2").hide();
+//    $("#highlight input", parent.document).val("");
+//    lockscreen();
+//
+//    $.ajax({
+//        method: "post",
+//        url: home_prefix + "otherlog.cgi",
+//        data:{
+//            source: mode,
+//            topic_id: tid,
+//            query: para,
+//            flag: 'query'
+//        },
+//        success:function(response) {
+//            $("#lemurbox").attr("src", home_prefix + url + "?" + encodeURIComponent(para));
+//        }
+//    })
+//
+//    // if parent.tname == '' #lemurdiscard.hide()
+//}
 
-    $.ajax({
-        method: "post",
-        url: home_prefix + "otherlog.cgi",
-        data:{
-            source: mode,
-            topic_id: tid,
-            query: para,
-            flag: 'query'
-        },
-        success:function(response) {
-            $("#lemurbox").attr("src", home_prefix + url + "?" + encodeURIComponent(para));
-        }
-    })
-    
-    // if parent.tname == '' #lemurdiscard.hide()
-}
-
-function structureQuery(field){ //format of structure query:  fieldName:value;   ex.  phone:2021234567
-    mode = "S" //abbreviation for structured query
-    q = "" //query
+function singleFieldQuery(field){ //format of query:  fieldName:value;   ex.  phone:2021234567
+    if (field == "box") {
+        mode = "N";
+    } else {
+        mode = "S" //abbreviation for structured query
+    }
+    var q = "" //query
     var N = 0; //number of query parts
+    url = dict["domains"][1];
+    level = 'L';
     if (field == "phone") {
         if ($("#phoneInput").val()) {
             q = "phone:"+$("#phoneInput").val()+";";
@@ -106,6 +112,11 @@ function structureQuery(field){ //format of structure query:  fieldName:value;  
         }
         if ($("#reviewSiteIDInput").val())  {
             q += "reviewSiteID:"+$("#reviewSiteIDInput").val()+";";
+            N = 1;
+        }
+    } else if (field == "box") {
+        if ($("#querybox").val()) {
+            q = "box:" + $("#querybox").val() + ";";
             N += 1;
         }
     }
@@ -122,7 +133,8 @@ function structureQuery(field){ //format of structure query:  fieldName:value;  
                 source: mode,
                 topic_id: tid,
                 query: para,
-                flag: 'query'
+                flag: 'query',
+                lvl: level
             },
             success:function(response) {
                 $("#lemurbox").attr("src", home_prefix + url + "?" + encodeURIComponent(para));
@@ -133,78 +145,98 @@ function structureQuery(field){ //format of structure query:  fieldName:value;  
 
 function refineSearch() {
     mode = "S";
-    query = ""
-    if ($age == 1) {
-	    query += "age:"+$( "#ageSlider" ).slider( "values", 0 )+$( "#ageSlider" ).slider( "values", 1 )+";";
+    q = ""; //query
+    var N = 0; //number of query parts
+    url = dict["domains"][1];
+    level = 'L';
+    if ($age == 1) { //age slider value has been changed
+	    q += "age:"+$("#ageSlider").slider("values",0)+$("#ageSlider").slider("values",1)+";";
+	    N += 1;
     }
-    if ($height== 1) {
-	    query += "height:"+$( "#heightSlider" ).slider( "values", 0 )+$( "#heightSlider" ).slider( "values", 1 )+";";
+    if ($height== 1) { //height slider value has been changed
+	    q += "height:"+$("#heightSlider").slider("values",0)+$("#heightSlider").slider("values",1)+";";
+	    N += 1;
     }
     if ($("#nameInput").val()) {
-        query += "name:"+$("#nameInput").val()+";";
+        q += "name:"+$("#nameInput").val()+";";
+        N += 1;
     }
     if ($("#stateInput").val() &&  $("#stateInput").val() != "-- select a state --") {
-        query += "state:"+$("#stateInput").val()+";";
+        q += "state:"+$("#stateInput").val()+";";
+        N += 1;
     }
     if ($("#cityInput").val())  {
-        query += "city:"+$("#cityInput").val()+";";
+        q += "city:"+$("#cityInput").val()+";";
+        N += 1;
     }
-    if ($("#whiteHairBox").is(":checked"))  {
-        query += "hairColor:"+$("#whiteHairBox").val()+";";
+
+    var hairColors = [];
+    var hairboxes = ["#WhiteHairBox","#BlackHairBox","#BrownHairBox","#BlondeHairBox","#RedHairBox","#BlueHairBox"];
+    for (i=0;i<hairboxes.length;i++) {
+        if ($(hairboxes[i]).is(":checked")) {
+            hairColors.push($(hairboxes[i]).val());
+        }
     }
-    if ($("#blackHairBox").is(":checked"))  {
-        query += "hairColor:"+$("#blackHairBox").val()+";";
+    if (hairColors.length>0) {
+        q += "hairColor:"+hairColors.join()+";";
+        N += 1;
     }
-    if ($("#brownHairBox").is(":checked"))  {
-        query += "hairColor:"+$("#brownHairBox").val()+";";
+
+    var eyeColors = [];
+    var eyeBoxes = ["#BrownEyeBox","#BlackEyeBox","#BlueEyeBox","#AmberEyeBox","#GreyEyeBox","#GreenEyeBox"];
+    for (i=0;i<eyeBoxes.length;i++) {
+        if ($(eyeBoxes[i]).is(":checked")) {
+            eyeColors.push($(eyeBoxes[i]).val());
+        }
     }
-    if ($("#blondeHairBox").is(":checked"))  {
-        query += "hairColor:"+$("#blondeHairBox").val()+";";
+    if (eyeColors.length>0) {
+        q += "eyeColor:"+eyeColors.join()+";";
+        N += 1;
     }
-    if ($("#redHairBox").is(":checked"))  {
-        query += "hairColor:"+$("#redHairBox").val()+";";
-    }
-    if ($("#blueHairBox").is(":checked"))  {
-        query += "hairColor:"+$("#blueHairBox").val()+";";
-    }
-    if ($("#brownEyeBox").is(":checked"))  {
-        query += "eyeColor:"+$("#brownEyeBox").val()+";";
-    }
-    if ($("#blackEyeBox").is(":checked"))  {
-        query += "eyeColor:"+$("#blackEyeBox").val()+";";
-    }
-    if ($("#blueEyeBox").is(":checked"))  {
-        query += "eyeColor:"+$("#blueEyeBox").val()+";";
-    }
-    if ($("#amberEyeBox").is(":checked"))  {
-        query += "eyeColor:"+$("#amberEyeBox").val()+";";
-    }
-    if ($("#greyEyeBox").is(":checked"))  {
-        query += "eyeColor:"+$("#greyEyeBox").val()+";";
-    }
-    if ($("#greenEyeBox").is(":checked"))  {
-        query += "eyeColor:"+$("#greenEyeBox").val()+";";
-    }
+
     if ($("#ethnicityInput").val() &&  $("#ethnicityInput").val() != "-- select an ethnicity --") {
-	query += "ethnicity:"+$("#ethnicityInput").val()+";"
+	    query += "ethnicity:"+$("#ethnicityInput").val()+";"
+	    N += 1;
     }
     if ($("#nationalityInput").val() && $("#nationalityInput").val()!="-- select a country --")  {
-        query += "nationality:"+$("#nationalityInput").val()+";";
+        q += "nationality:"+$("#nationalityInput").val()+";";
+        N += 1;
     }
     if ($("#socialMediaInput").val() && $("#socialMediaInput").val() != "-- select an social media --")  {
-        query += "socialMedia:"+$("#socialMediaInput").val()+";";
+        q += "socialMedia:"+$("#socialMediaInput").val()+";";
+        N += 1;
     }
     if ($("#socialMediaIDInput").val())  {
-        query += "socialMediaID:"+$("#socialMediaIDInput").val()+";";
+        q += "socialMediaID:"+$("#socialMediaIDInput").val()+";";
+        N += 1;
     }
     if ($("#reviewSiteInput").val() && $("#reviewSiteInput").val() != "-- select a review site --")  {
-        query += "reviewSite:"+$("#reviewSiteInput").val()+";";
+        q += "reviewSite:"+$("#reviewSiteInput").val()+";";
+        N += 1;
     }
     if ($("#reviewSiteIDInput").val())  {
-        query += "reviewSiteID:"+$("#reviewSiteIDInput").val()+";";
+        q += "reviewSiteID:"+$("#reviewSiteIDInput").val()+";";
+        N += 1;
     }
-    if (query) {
-        para = "T=" + tid + "&Mode=" + mode+ "&q=" + "" + encodeURIComponent(query);
+
+    //within current search
+    if ($("#withinCurrentSearch").is(":checked")) {
+        if ($("#phoneInput").val()) {
+            q += "phone:"+$("#phoneInput").val()+";";
+            N += 1;
+        }
+        if ($("#emailInput").val()) {
+            q += "email:"+$("#emailInput").val()+";"
+            N += 1;
+        }
+        if ($("#querybox").val()) {
+            q += "box:"+$("#querybox").val()+";";
+            N += 1;
+        }
+    }
+
+    if (q) {
+        para = "T=" + tid + "&Mode=" + mode+ "&N=" + N + "&q=" + q;
         search_signal = 1;
         $("#control_panel_2").hide();
         $("#highlight input", parent.document).val("");
@@ -216,12 +248,13 @@ function refineSearch() {
                 source: mode,
                 topic_id: tid,
                 query: para,
-                flag: 'query'
+                flag: 'query',
+                lvl:level
             },
             success:function(response) {
-                $("#lemurbox").attr("src", home_prefix + url + "?" + para);
+                $("#lemurbox").attr("src", home_prefix + url + "?" + encodeURIComponent(para));
             }
-        })
+        });
     }
 }
 
@@ -311,7 +344,7 @@ function goback(){
 }
 
 function prepareTopbar(){
-    $("#control_panel .search_button").click(runQuery);
+    $("#control_panel .search_button").click(singleFieldQuery("box"));
     $("#docback").click(goback);
     $("#docdiscard").click(function(){
         move('r');

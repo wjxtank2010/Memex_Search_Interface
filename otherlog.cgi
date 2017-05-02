@@ -23,6 +23,7 @@ def logHandle(form, environ):
     hstring = form.getvalue('hstring',None)
     color = form.getvalue('color', None)
     subtopic_id = form.getvalue('subtopic_id', None)
+    level = form.getvalue('lvl',None)
 
     #if mode == 'L': source = 'lemur'
     #elif mode == 'S': source = 'solr'
@@ -37,9 +38,6 @@ def logHandle(form, environ):
     elif mode == "T": source = "textFindMore"
     else: source = "unknown"
 
-    f = open("c.txt","w")
-    f.write("haha")
-    f.close()
     if flag == 'logout':
         try: mylog.log_logout(username)
         except: pass
@@ -71,7 +69,7 @@ def logHandle(form, environ):
         atn_db = DBHandler(db_path.atn)
         atn_db.cur.execute('SELECT topic_name FROM topic WHERE topic_id=?', [int(topic_id)])
         topic_name, = atn_db.cur.fetchone()
-        atn_db.cur.execute('UPDATE topic SET para=?,mode=? WHERE topic_id=?', [query,mode,int(topic_id)])
+        atn_db.cur.execute('UPDATE topic SET para=?,mode=?,level=? WHERE topic_id=?', [query,mode,level,int(topic_id)])
         atn_db.commit()
         try: mylog.log_query(username, source, topic_id, topic_name, query)
         except: pass
