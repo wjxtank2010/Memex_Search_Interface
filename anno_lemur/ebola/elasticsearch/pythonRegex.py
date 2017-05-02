@@ -109,15 +109,14 @@ def getQuery(atn_db,topicId):
     return query_dic
 
 if __name__ == "__main__":
-    f = open("output.txt") # read document content
-    lines = f.readlines()
-    f.close()
-
     reload(sys)
     sys.setdefaultencoding("utf-8")
     atn_db  = DBHandler("../../../database/Memex.db") #database connection
     topicId = int(sys.argv[1]) #topic id
 
+    f = open(str(topicId)+".txt") # read document content
+    lines = f.readlines()
+    f.close()
     query_dic = getQuery(atn_db,topicId)
     inputString = " ".join(lines)
     extractFeature(inputString, query_dic)  # match query key word with doc pre-annotation
