@@ -138,6 +138,7 @@ function singleFieldQuery(field){ //format of query:  fieldName:value;   ex.  ph
             },
             success:function(response) {
                 $("#lemurbox").attr("src", home_prefix + url + "?" + para + encodeURIComponent(q));
+                para += encodeURIComponent(q);
             }
         })
     }
@@ -253,6 +254,7 @@ function refineSearch() {
             },
             success:function(response) {
                 $("#lemurbox").attr("src", home_prefix + url + "?" + para+encodeURIComponent(q));
+                para += encodeURIComponent(q);
             }
         });
     }
@@ -331,13 +333,14 @@ function goback(){
     level = 'L';
     lockscreen();
     $.ajax({
-        method: "get",
+        method: "post",
         url: home_prefix + "otherlog.cgi",
         data:{
             source: mode,
             topic_id: tid,
             docno: doc_id,
             flag: 'goback',
+            lvl:level
         }
     })
     $("#lemurbox").attr("src", home_prefix+url+'?'+para);
