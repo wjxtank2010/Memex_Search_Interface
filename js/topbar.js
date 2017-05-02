@@ -347,7 +347,8 @@ function goback(){
 }
 
 function prepareTopbar(){
-    $("#control_panel .search_button").click(singleFieldQuery("box"));
+    //$("#control_panel .search_button").click(singleFieldQuery("box"));
+    $("#terriersubmit").click(singleFieldQuery("box"));
     $("#docback").click(goback);
     $("#docdiscard").click(function(){
         move('r');
