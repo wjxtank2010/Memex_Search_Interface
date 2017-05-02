@@ -480,6 +480,7 @@ function allowDrop(ev) {
 }
 
 function gufindmore(e){
+    level = "L";
     var dropbox = $(e.target).closest(".dropbox");
     var passages = dropbox.find(".passage");
     var sid = $(e.target).closest(".dropbox").data("subtopic_id");
@@ -488,11 +489,11 @@ function gufindmore(e){
     if (imgs.length>0){//image passage
         mode = "I";
         img = passages.find("#image img")[0];
-        thequery = "T="+tid+"&Mode="+mode+"&q="+img.src;
+        thequery = "T="+tid+"&Mode="+mode+"&N=1"+"&q="+img.src;
     } else {
         mode = "T";
         if (passages.find("p").text().length>0) {
-            thequery = "T="+tid+"&Mode="+mode+"&q="+passages.find("p").text();
+            thequery = "T="+tid+"&Mode="+mode+"&N=1"+"&q="+passages.find("p").text();
         }
     }
     if (thequery.length>0) {
@@ -510,6 +511,7 @@ function gufindmore(e){
                 subtopic_id: sid,
                 flag: 'findmore',
                 query: thequery,
+                lvl:level;
             }
         });
     }
