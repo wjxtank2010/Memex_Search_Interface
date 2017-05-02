@@ -113,6 +113,8 @@ if __name__ == "__main__":
     lines = f.readlines()
     f.close()
 
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
     atn_db  = DBHandler("../../../database/Memex.db") #database connection
     topicId = int(sys.argv[1]) #topic id
 
