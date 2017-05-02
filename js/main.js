@@ -79,7 +79,6 @@ function getQuery(){
     } else {
         //fill in structure fields
         var fieldIDMap = {"phone":"#phoneInput","email":"#emailInput","name":"#nameInput","ethnicity":"#ethnicityInput","nationality":"#nationalityInput","state":"#stateInput","city":"#cityInput","socialMedia":"#socialMediaInput","socialMediaID":"#socialMediaIDInput","reviewSite":"#reviewSiteInput","reviewSiteID":"#reviewSiteIDInput","box":"#querybox"};
-        var query_dic = queryParse;
         for (key in query_dic) {
             if (key == "age"){
                 ageLow = parseInt(query_dic[key].substr(0,2));
