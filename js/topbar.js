@@ -196,7 +196,7 @@ function refineSearch() {
     }
 
     if ($("#ethnicityInput").val() &&  $("#ethnicityInput").val() != "-- select an ethnicity --") {
-	    query += "ethnicity:"+$("#ethnicityInput").val()+";"
+	    q += "ethnicity:"+$("#ethnicityInput").val()+";"
 	    N += 1;
     }
     if ($("#nationalityInput").val() && $("#nationalityInput").val()!="-- select a country --")  {
