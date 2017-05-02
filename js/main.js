@@ -72,7 +72,7 @@ function lemurBoxJump(){
 }
 
 function getQuery(){
-    var query_dic = queryParse;
+    var query_dic = queryParse();
     if (mode == 'N') { //update query box only if it is normal query
         $("#control_panel input").val(query_dic["box"].replace(/\+/g," "));
     } else if (mode == "S") {
