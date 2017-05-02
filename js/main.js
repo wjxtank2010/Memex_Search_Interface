@@ -511,7 +511,7 @@ function gufindmore(e){
                 subtopic_id: sid,
                 flag: 'findmore',
                 query: thequery,
-                lvl:level;
+                lvl:level
             }
         });
     }
