@@ -913,12 +913,50 @@ $(document).ready(function(){
     $("#sidebar").height($("body").height() - 35);
     
     $("#lemurbox").height($("body").height() - 232);
-    
-    parse(data);
 
     $("#loption button").click(loptionChange);
 
+        $("#ageSlider").slider({
+        range: true,
+        min: 10,
+        max: 60,
+        values: [ 20, 40 ],
+        slide: function(event,ui) {
+            $( "#age_range" ).val(ui.values[0] + " - " + ui.values[1]);
+        },
+        change:function(event,ui) {
+            if (event.originalEvent) { //only trigger when event is from user interaction
+	            event.preventDefault();
+	            $age = 1;
+	            refineSearch();
+	        }
+        }
+    });
+    $("#age_range").val($("#ageSlider").slider("values",0) + " - " + $("#ageSlider").slider("values",1));
+
+    $( "#heightSlider" ).slider({
+        range: true,
+        min: 120,
+        max: 220,
+        values: [ 150, 190 ],
+        slide: function( event, ui ) {
+            $("#height_range").val(ui.values[0] + " - " + ui.values[1] + "cm");
+        },
+        change:function(event,ui) {
+            if (event.originalEvent) { //only trigger when event is from user interaction
+	            event.preventDefault();
+	            $height = 1;
+                refineSearch();
+	        }
+        }
+    });
+    $("#height_range").val($("#heightSlider").slider("values",0) +" - " + $("#heightSlider").slider("values",1) + "cm");
+
+    parse(data);
+
     prepareTopbar();
+
+
     $("#querybox").keypress(function(e){
         if (e.keyCode == 13) {
             e.preventDefault();
@@ -966,41 +1004,6 @@ $(document).ready(function(){
     getSidebar();
 
     getCount();
-    $("#ageSlider").slider({
-        range: true,
-        min: 10,
-        max: 60,
-        values: [ 20, 40 ],
-        slide: function(event,ui) {
-            $( "#age_range" ).val(ui.values[0] + " - " + ui.values[1]);
-        },
-        change:function(event,ui) {
-            if (event.originalEvent) { //only trigger when event is from user interaction
-	            event.preventDefault();
-	            $age = 1;
-	            refineSearch();
-	        }
-        }
-    });
-    $("#age_range").val($("#ageSlider").slider("values",0) + " - " + $("#ageSlider").slider("values",1));
-    
-    $( "#heightSlider" ).slider({
-        range: true,
-        min: 120,
-        max: 220,
-        values: [ 150, 190 ],
-        slide: function( event, ui ) {
-            $("#height_range").val(ui.values[0] + " - " + ui.values[1] + "cm");
-        },
-        change:function(event,ui) {
-            if (event.originalEvent) { //only trigger when event is from user interaction
-	            event.preventDefault();
-	            $height = 1;
-                refineSearch();
-	        }
-        }
-    });
-    $("#height_range").val($("#heightSlider").slider("values",0) +" - " + $("#heightSlider").slider("values",1) + "cm");
 
     $("#total_count").tooltip();
    
