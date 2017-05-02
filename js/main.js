@@ -922,45 +922,45 @@ $(document).ready(function(){
 
     prepareTopbar();
     $("#querybox").keypress(function(e){
-	if (e.keyCode == 13) {
-	    e.preventDefault();
-	    singleFieldQuery("box");
-	}
+        if (e.keyCode == 13) {
+            e.preventDefault();
+            singleFieldQuery("box");
+        }
     });
     $("#phoneInput").keypress(function(e){
         if (e.keyCode == 13) {
-	    e.preventDefault();
-            phoneSearch();
+	        e.preventDefault();
+            singleFieldQuery("phone");
         }
     });
     $("#emailInput").keypress(function(e){
         if (e.keyCode == 13) {
-	    e.preventDefault();
-            emailSearch();
+	        e.preventDefault();
+            singleFieldQuery("email");
         }
     });
     $("#nameInput").keypress(function(e){
         if (e.keyCode == 13) {
-	    e.preventDefault();
-            nameSearch();
+	        e.preventDefault();
+            singleFieldQuery("name");
         }
     });
     $("#cityInput").keypress(function(e){
         if (e.keyCode == 13) {
-	    e.preventDefault();
+	        e.preventDefault();
             refineSearch();
         }
     });
     $("#socialMediaIDInput").keypress(function(e){
         if (e.keyCode == 13) {
             e.preventDefault();
-            socialMediaSearch();
+            singleFieldQuery("socialMedia");
         }
     });
     $("#reviewSiteIDInput").keypress(function(e){
         if (e.keyCode == 13) {
             e.preventDefault();
-            reviewSiteSearch();
+            singleFieldQuery("reviewSite");
         }
     });
     valignelements();
