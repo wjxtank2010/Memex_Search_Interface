@@ -72,10 +72,11 @@ function lemurBoxJump(){
 }
 
 function getQuery(){
+    if (mode != "N" && mode != "S") {return;}
     var query_dic = queryParse();
     if (mode == 'N') { //update query box only if it is normal query
         $("#control_panel input").val(query_dic["box"].replace(/\+/g," "));
-    } else if (mode == "S") {
+    } else {
         //fill in structure fields
         var fieldIDMap = {"phone":"#phoneInput","email":"#emailInput","name":"#nameInput","ethnicity":"#ethnicityInput","nationality":"#nationalityInput","state":"#stateInput","city":"#cityInput","socialMedia":"#socialMediaInput","socialMediaID":"#socialMediaIDInput","reviewSite":"#reviewSiteInput","reviewSiteID":"#reviewSiteIDInput","box":"#querybox"};
         var query_dic = queryParse;
@@ -108,8 +109,6 @@ function getQuery(){
                 $(fieldIDMap[key]).val(query_dic[key]);
             }
         }
-    } else {
-        return;
     }
 }
 
