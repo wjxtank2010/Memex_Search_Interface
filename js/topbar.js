@@ -366,11 +366,10 @@ function prepareTopbar(){
 
     $("#assesssad").tooltip();
     
-    $("#highlightText").bind("input",function(){
-	$("#lemurbox")[0].contentWindow.highlighting(1);
-     }
-    );
-    $("#highlight button").click(function(){
-	$("#lemurbox")[0].contentWindow.highlighting(1);    
-})
+    $("#highlightText").bind("input",function() {
+        $("#lemurbox")[0].contentWindow.highlighting(1);
+    });
+    $("#highlight button").click(function() {
+	    $("#lemurbox")[0].contentWindow.highlighting(1);
+    });
 }
