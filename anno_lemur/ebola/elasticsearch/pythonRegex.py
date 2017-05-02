@@ -11,8 +11,8 @@ def extractFeature(inputString, dic):
     name_to_display = ""
     if nameTagContent:
         names = nameTagContent.split(",")
-        if "name" in dic and dic["name"] and dic["name"] in nameTagContent:
-            name_to_display = dic["name"]
+        if "name" in dic and dic["name"] and dic["name"].lower() in nameTagContent.lower():
+            name_to_display = dic["name"].capitalize()
         else:
             name_to_display = names[0].lstrip("<name>name: ").capitalize()
 
@@ -53,7 +53,7 @@ def extractFeature(inputString, dic):
     if ethnicityTagContent:
         nationalities = ethnicityTagContent.split(",")
         #a.write("nationalities: "+str(nationalities)+"\n")
-        if "nationality" in dic and dic["nationality"] and dic["nationality"] in ethnicityTagContent:
+        if "nationality" in dic and dic["nationality"] and dic["nationality"].lower() in ethnicityTagContent.lower():
             ethnicity_to_display = dic["nationality"]
         else:
             ethnicity_to_display = nationalities[0].lstrip("<ethnicity>ethnicity: ").capitalize()
@@ -63,7 +63,7 @@ def extractFeature(inputString, dic):
     location_to_display = ""
     if locationTagContent:
         locations = locationTagContent.split(",")
-        if "state" in dic and dic["state"] and dic["state"] in locationTagContent:
+        if "state" in dic and dic["state"] and dic["state"].lower() in locationTagContent.lower():
             location_to_display = dic["state"]
             if "city" in dic and dic["city"] and dic["city"] in locationTagContent:
                 location_to_display = dic["city"] + ", " + location_to_display
@@ -75,7 +75,7 @@ def extractFeature(inputString, dic):
     hairColor_to_display = ""
     if hairColorTagContent:
         hairs = hairColorTagContent.split(",")
-        if "hairColor" in dic and dic["hairColor"] and dic["hairColor"] in hairColorTagContent:
+        if "hairColor" in dic and dic["hairColor"] and dic["hairColor"].lower() in hairColorTagContent.lower():
             hairColor_to_display = dic["hairColor"]
         else:
             hairColor_to_display = hairs[0].lstrip("<hair_color>hair_color:")
