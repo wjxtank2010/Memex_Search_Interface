@@ -104,12 +104,12 @@ def main():
 	if "ethnicity" in query_dic:
 		f = open("nation_continent.txt")
 		ethnicity_dic = yaml.load(f)
-		candidate_countries = ethnicity_dic[query_dic["ethnicity"]]
+		candidate_countries = ethnicity_dic[query_dic["ethnicity"].lower()]+[query_dic["ethnicity"].capitalize()]
 		for document in documents:
 			if "ethnicity" in document["_source"] and document["_source"]["ethnicity"]:
 				ethnicities = map(lambda x:x.lower(),document["_source"]["ethnicity"])
 				#print(ethnicities)
-				if query_dic["ethnicity"] in ethnicities:
+				if query_dic["ethnicity"].capitalize() in ethnicities:
 					print(document["_id"])
 					results.append(document["_id"])
 				else:
