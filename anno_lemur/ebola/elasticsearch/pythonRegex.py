@@ -2,6 +2,7 @@
 # author: Sharon
 import sys
 import re
+sys.path.append("../../../")
 from database import DBHandler
 
 def extractFeature(inputString, dic):
