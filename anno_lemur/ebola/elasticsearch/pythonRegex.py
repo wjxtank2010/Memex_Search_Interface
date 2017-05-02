@@ -2,17 +2,9 @@
 # author: Sharon
 import sys
 import re
+from database import DBHandler
 
-def extractFeature(inputString, query):
-    query = query.strip()
-    key_value = query.split(";")
-    dic = {}
-    if ";" in query:
-        for el in key_value:  # get search features
-            if el != "":
-                pair = el.split(":")
-                dic[pair[0]] = pair[1]
-
+def extractFeature(inputString, dic):
     # get name to display for snippet
     nameTagContent = inputString[inputString.index("<name>"):inputString.index("</name>")]
     name_to_display = ""
@@ -105,16 +97,25 @@ def extractImg(inputString):
     if imgResult:
         print(delimeter.join(imgResult)+delimeter)
 
+def getQuery(atn_db,topicId):
+    atn_db.cur.execute("SELECT para from topic where topic_id=?",[topicId])
+    para, = atn_db.cur.fetchone()
+    paraParts = para.split("&",3)
+    queryFieldCount = int(paraParts[2].lstrip("N="))
+    query = paraParts[3][:-1]#delete the last ;
+    query_terms = query.lstrip("q=").split(";",queryFieldCount-1)
+    query_dic = {x.split(":",1)[0]:x.split(":",1)[1] for x in query_terms}
+    return query_dic
+
 if __name__ == "__main__":
     f = open("output.txt") # read document content
     lines = f.readlines()
     f.close()
 
-    f = open("structureQuerylog") # read current query
-    logs = f.readlines()
-    query = logs[-1]
-    f.close()
+    atn_db  = DBHandler("../../../database/Memex.db") #database connection
+    topicId = int(sys.argv[1]) #topic id
 
+    query_dic = getQuery(atn_db,topicId)
     inputString = " ".join(lines)
-    extractFeature(inputString, query)  # match query key word with doc pre-annotation
+    extractFeature(inputString, query_dic)  # match query key word with doc pre-annotation
     extractImg(inputString)
