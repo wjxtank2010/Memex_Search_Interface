@@ -10,10 +10,14 @@ from elasticsearch import Elasticsearch,RequestsHttpConnection
 def getQuery(atn_db,topicId):
 	atn_db.cur.execute("SELECT para from topic where topic_id=?",[topicId])
 	para, = atn_db.cur.fetchone()
+	a = open("q.txt","w")
+	a.write(para+"\n")
 	paraParts = para.split("&",3)
 	queryFieldCount = int(paraParts[2].lstrip("N="))
 	query = paraParts[3][:-1]#delete the last ;
 	query_terms = query.lstrip("q=").split(";",queryFieldCount-1)
+	a.write(str(query_terms))
+	a.close()
 	query_dic = {x.split(":",1)[0]:x.split(":",1)[1] for x in query_terms}
 	return query_dic
 
