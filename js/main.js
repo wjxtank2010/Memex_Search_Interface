@@ -511,7 +511,7 @@ function gufindmore(e){
                 color: 'pink',
                 subtopic_id: sid,
                 flag: 'findmore',
-                query: para+q
+                query: para+q,
                 lvl:level
             },
             success: function(response) {
