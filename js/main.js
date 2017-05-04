@@ -551,21 +551,20 @@ function nistfindmore(e){
 }
 
 function deleteSub(){
-    if (confirm("are you sure you want to delete this subtopic?") == true)
-    {
-	$p = $(this).closest('.dropbox');
-	$.ajax({
-	    method: "post",
-	    url: "./deleteHandler.cgi",
-	    data:{
-		    subtopic_id: $p.data("subtopic_id")
-	    },
-	    success: function(){
-		$p.fadeOut(300,function(){$(this).remove();})
-		$("#scount").text(parseInt($("#scount").text()) - 1);
-        getCount();
-	    }
-	})
+    if (confirm("are you sure you want to delete this subtopic?") == true) {
+	    $p = $(this).closest('.dropbox');
+        $.ajax({
+            method: "post",
+            url: "./deleteHandler.cgi",
+            data:{
+                subtopic_id: $p.data("subtopic_id")
+            },
+            success: function(){
+                $p.fadeOut(300,function(){$(this).remove();})
+                $("#scount").text(parseInt($("#scount").text()) - 1);
+                getCount();
+            }
+        })
     };
 };
 /* -------------------------------- */
@@ -621,37 +620,36 @@ function editSubCallBack(response, $target){
 
 function annotate(event){
     event.preventDefault();
-    if ($dragging != null){
-        $drecord = $dragging;
-        $dtarget = $(event.target).closest(".droppable");
-        if ($drecord.closest('.droppable').is($dtarget) == false){
-            $.ajax({
-                method: "post",
-                url: "./updatePassage.cgi",
-                data: {
-                    passage_id: $drecord.data("passage_id"),
-                    subtopic_id: $(event.target).closest(".dropbox").data("subtopic_id"),
-                    topic_id: tid
-                },
-                success: function(){
-                    $drecord.closest('.dropbox').find('.pcount').each(function(){
-                    $(this).text(parseInt($(this).text()) - 1);
-                    });
-                    $(event.target).closest('.dropbox').find('.pcount').each(function(){
-                    $(this).text(parseInt($(this).text()) + 1);
-                    });
-                    $drecord.appendTo($dtarget).hide().fadeIn(100);
-                    $dtarget.scrollTop($dtarget[0].scrollHeight);
-                }
-            });
-        }
-    } else{
-        if ($("#lemurbox").contents().find("docno").length){//currenly in single result detail page
-            addPassage(event);
-        }else{//currently in all result page,drag&drop disabled because docID might not be captured in this page
-            alertdialog(4);
-        }
-	};
+//    if ($dragging != null){
+//        $drecord = $dragging;
+//        $dtarget = $(event.target).closest(".droppable");
+//        if ($drecord.closest('.droppable').is($dtarget) == false){
+//            $.ajax({
+//                method: "post",
+//                url: "./updatePassage.cgi",
+//                data: {
+//                    passage_id: $drecord.data("passage_id"),
+//                    subtopic_id: $(event.target).closest(".dropbox").data("subtopic_id"),
+//                    topic_id: tid
+//                },
+//                success: function(){
+//                    $drecord.closest('.dropbox').find('.pcount').each(function(){
+//                    $(this).text(parseInt($(this).text()) - 1);
+//                    });
+//                    $(event.target).closest('.dropbox').find('.pcount').each(function(){
+//                    $(this).text(parseInt($(this).text()) + 1);
+//                    });
+//                    $drecord.appendTo($dtarget).hide().fadeIn(100);
+//                    $dtarget.scrollTop($dtarget[0].scrollHeight);
+//                }
+//            });
+//        }
+//    } else{
+    if ($("#lemurbox").contents().find("docno").length){//currenly in single result detail page
+        addPassage(event);
+    } else{//currently in all result page,drag&drop disabled because docID might not be captured in this page
+        alertdialog(4);
+    }
 }
 
 function addPassage(event){
@@ -834,27 +832,27 @@ function addPassageCallBack(passageType,ptext, $target, response, doc_id){
 function deletePassage(e, s){
     if ((s == 2 && confirm("are you sure it's an irrelevant passage to this subtopic?") == true) || (s ==3 && confirm("are you sure it's a duplicate passage to this subtopic?") == true))
     {
-    lockscreen();
-	$p = $(e.target).closest('.passage');
-	$.ajax({
-	    method: "post",
-	    url: "./deleteHandler.cgi",
-	    data:{
-          signal: s,
-		  passage_id: $p.data("passage_id"),
-          topic_id: tid
-	    },
-	    success: function(){
-		$p.fadeOut(300,function(){$(this).remove();})
-		$p.closest('.dropbox').find('.pcount').each(function(){
-		    $(this).text(parseInt($(this).text()) - 1);
-		});
-        getCount();
-	    },
-        complete: function(){
-            $(".screen-cover").remove();
-        }
-	});
+        lockscreen();
+	    $p = $(e.target).closest('.passage');
+        $.ajax({
+            method: "post",
+            url: "./deleteHandler.cgi",
+            data:{
+              signal: s,
+              passage_id: $p.data("passage_id"),
+              topic_id: tid
+            },
+            success: function(){
+                $p.fadeOut(300,function(){$(this).remove();})
+                $p.closest('.dropbox').find('.pcount').each(function(){
+                $(this).text(parseInt($(this).text()) - 1);
+            });
+            getCount();
+            },
+            complete: function(){
+                $(".screen-cover").remove();
+            }
+        });
     };
 };
 

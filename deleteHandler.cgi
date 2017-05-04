@@ -46,15 +46,6 @@ def deleteHandle(form, environ):
                 AND passage.docno = ?) = 0
             ''', [topic_id, docno, topic_id, docno])
             atn_db.commit()
-
-            corpus = ['EBOLA', 'POLAR', 'WEAPON'][domain_id-1]
-            reason = ['I','D'][int(signal)-2]
-            m1 = m2 = ''
-            try: 
-                m1, m2 = postNugget.deleteNugget(userid, topic_id, subtopic_id, corpus, int(passage_id), reason)
-            except: 
-                pass
-
             try: mylog.log_delete_passage(username, signal, passage_id, passage_name)
             except: pass
 
