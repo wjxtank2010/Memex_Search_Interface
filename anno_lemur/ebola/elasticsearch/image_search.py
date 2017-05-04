@@ -128,7 +128,7 @@ if __name__ == "__main__" :
     cur = atn_db.cur
     atn_db.cur.execute("SELECT para from topic where topic_id=?",[topicId])
     para, = atn_db.cur.fetchone()
-    query_img_url = para.split("&",3)[-1]
+    query_img_url = para.split("&",3)[-1].lstrip("q=")
     if download_photo(query_img_url,"./","query"):
         # initialize the image descriptor
         cd = ColorDescriptor((8, 12, 3))
