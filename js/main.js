@@ -138,7 +138,7 @@ function queryParse() {
 }
 
 function parse(){
-    dict = JSON.parse(data)
+    dict = JSON.parse(data);
 
     uid = dict['userid'];
     uname = dict['username'];
@@ -484,25 +484,26 @@ function gufindmore(e){
     var dropbox = $(e.target).closest(".dropbox");
     var passages = dropbox.find(".passage");
     var sid = $(e.target).closest(".dropbox").data("subtopic_id");
-    var thequery = "";
-    imgs = passages.find("#image img");
+    imgs = passages.find("#image img"); //This is an image passage
+    var q = "";
     if (imgs.length>0){//image passage
         mode = "I";
         img = passages.find("#image img")[0];
-        thequery = "T="+tid+"&Mode="+mode+"&N=1"+"&q="+img.src;
+        q = img.src;
     } else {
         mode = "T";
         if (passages.find("p").text().length>0) {
-            thequery = "T="+tid+"&Mode="+mode+"&N=1"+"&q="+passages.find("p").text();
+            q = passages.find("p").text();
         }
     }
-    if (thequery.length>0) {
+    if (q) {
         // ?? set mode or level ??
+        para = "T="+tid+"&Mode="+mode+"&N=1"+"&q=";
         $("#control_panel_2").hide();
         $("#highlight input", parent.document).val("");
         lockscreen();
         $.ajax({
-            method: "get",
+            method: "post",
             url: home_prefix + "otherlog.cgi",
             data:{
                 source: mode,
@@ -510,8 +511,12 @@ function gufindmore(e){
                 color: 'pink',
                 subtopic_id: sid,
                 flag: 'findmore',
-                query: thequery,
+                query: para+q
                 lvl:level
+            },
+            success: function(response) {
+                $("#lemurbox").attr("src", home_prefix + url + "?" + para+encodeURIComponent(q));
+                para += encodeURIComponent(q);
             }
         });
     }
