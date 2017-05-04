@@ -493,7 +493,7 @@ function gufindmore(e){
     } else {
         mode = "T";
         if (passages.find("p").text().length>0) {
-            q = "text:"$.trim(passages.find("p").text())+";";
+            q = "text:"+$.trim(passages.find("p").text())+";";
         }
     }
     if (q) {
