@@ -4,7 +4,7 @@ $(document).ready(function() {
     //parent.logCurrentPage(location);
     $("#displayList li").click(function () {
 	todoc = $(this).text();
-    location = home_prefix + domain_url.replace('search','elasticsearch') + "?e=" + todoc;
+    location = home_prefix + domain_url + "?e=" + todoc;
     /* commented for log
 	$.ajax({
 	    method: "post",
