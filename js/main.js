@@ -879,7 +879,7 @@ function getDocno(){
 };
 
 function backToDocument(){
-    window.open(dict["domains"][1].replace("search","elasticsearch") + "?e=" + $(this).text(), 'check',"height=600,width=900,left=" + (screen.width-900)/2 + ",top=" + (screen.height-700)/2);
+    window.open(dict["domains"][1] + "?e=" + $(this).text(), 'check',"height=600,width=900,left=" + (screen.width-900)/2 + ",top=" + (screen.height-700)/2);
 };
 
 function displayList(type){
@@ -889,7 +889,6 @@ function displayList(type){
     else{
         alertdialog(1);
     }
-	
 };
 
 function alertdialog(onum){
