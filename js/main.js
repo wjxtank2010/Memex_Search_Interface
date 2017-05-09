@@ -1104,9 +1104,9 @@ $(document).ready(function(){
         displayList('duplicate');
     });
 
-    $("#mdoclist").click(function()){
+    $("#mdoclist").click(function(){
         displayList('bookmark');
-    }
+    });
     
     $("#viewanno").click(function(){
         $.ajax({
