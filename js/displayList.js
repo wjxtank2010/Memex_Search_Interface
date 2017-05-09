@@ -20,7 +20,6 @@ $(document).ready(function() {
 		location = domain_url.replace('search','check') + "?e=" + todoc;
 	    }
 	    });
-    
     */
     });
 });

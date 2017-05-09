@@ -87,7 +87,7 @@ class AtnTables:
                 create_time datetime default current_timestamp
             )
             ''',
-            # state: 1 for tagged, 2 for discarded
+            # state: 1 for tagged, 2 for irrelevant, 3 for duplicate, 4 for bookmark
 
             '''
             subtopic(

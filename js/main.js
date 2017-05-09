@@ -493,7 +493,12 @@ function gufindmore(e){
     } else {
         mode = "T";
         if (passages.find("p").text().length>0) {
-            q = "text:"+$.trim(passages.find("p").text())+";";
+            q = "text:";
+            var passageArray = [];
+            for (var i=0;i<passages.length;i++) { //filter out some special characters when doing similar text search
+                passageArray.push($.trim(passages.eq(i).find("p").text()).replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '').replace(/\s\s+/g, ' '));
+            }
+            q += passageArray.join(" ")+";";
         }
     }
     if (q) {
@@ -1098,6 +1103,10 @@ $(document).ready(function(){
     $("#rdoclist").click(function(){
         displayList('duplicate');
     });
+
+    $("#mdoclist").click(function()){
+        displayList('bookmark');
+    }
     
     $("#viewanno").click(function(){
         $.ajax({

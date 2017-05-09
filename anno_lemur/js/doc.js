@@ -15,7 +15,7 @@ function highlighting(signal){
         return;
     }
 
-    $("docno").siblings("raw_content").html($.parseHTML(ohtml));
+    $("doc").html($.parseHTML(ohtml));//clear previous highlights by setting the html to the initial one.
 
     for (var i=0;i<terms.length;i++){
         if (stopwords.indexOf(terms[i].toLowerCase()) == -1 && terms[i].length>=2){
@@ -24,8 +24,7 @@ function highlighting(signal){
         re3 = new RegExp('(>[^<>]*)('+ terms[i] + ')([^<>]*<)','gi');
         //$("docno").siblings("text").html($("docno").siblings("text").html().replace(re1, '$1<span class="lemurhighlight">$2</span>$3'));
         //$("docno").siblings("text").html($("docno").siblings("text").html().replace(re2, '$1<span class="lemurhighlight">$2</span>$3'));
-        $("docno").siblings("raw_content").html($("docno").siblings("raw_content").html().replace(re3, '$1<span class="lemurhighlight">$2</span>$3'));
-
+        $("doc").html($("doc").html().replace(re3, '$1<span class="lemurhighlight">$2</span>$3'));
         };
     };
 
@@ -64,27 +63,27 @@ function logCurrentPage(){
 }
 
 $(document).ready(function(){
-
     $(".screen-cover", parent.document).remove();
 
-    ohtml = $("docno").siblings("raw_content").html();
+    ohtml = $("doc").html();
 
     parent.getCount();
 
     $("docno").after("<br/><br/>");
 
-    //$("#highlight input", parent.document).val("");
+    $("#highlight input", parent.document).val("");
 
     logCurrentPage();
  
-    highlighting(0); //where's highlight html?
+    highlighting(0);
     
-    $("docno").siblings("raw_content").mouseup(snapSelectionToWord);
+    $("doc").mouseup(snapSelectionToWord);
 
     $("raw_content a").click(function(e){
-	window.open(this.href,"outlink","height=600,width=900,left=" + (screen.width-900)/2 + ",top=" + (screen.height-700)/2);
-	e.preventDefault();
+	    window.open(this.href,"outlink","height=600,width=900,left=" + (screen.width-900)/2 + ",top=" + (screen.height-700)/2);
+	    e.preventDefault();
     });
+
     var imgs = Array.prototype.slice.apply(document.getElementsByTagName('img'));
     for (var i = 0; i < imgs.length; i++) {
         imgs[i].addEventListener("dragstart", function(ev) {
