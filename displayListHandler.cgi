@@ -30,7 +30,7 @@ def displayListHandle(form, environ):
             atn_db.cur.execute('SELECT docno FROM filter_list WHERE topic_id=? AND state=3', [int(topic_id)])
             title = "Duplicate"
         elfi type == "bookmark":
-            atn_db.cur.execute('SELECT docno FROM filter_list WHERE topic_id=? AND state=4', [int(topic_id)]
+            atn_db.cur.execute('SELECT docno FROM bookmark WHERE topic_id=? AND state=0', [int(topic_id)]
 
         try: mylog.log_view_tagged_discarded_doc(username, title.lower(), topic_id)
         except: pass

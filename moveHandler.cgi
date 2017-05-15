@@ -24,6 +24,24 @@ def moveHandle(form, environ):
 
     print("Content-Type: text/plain\r\n")
 
+    if signal == 'm': #mark dont' have to switch doc
+        atn_db.cur.execute('SELECT state FROM bookmark WHERE topic_id=? AND docno=?', [topic_id, docno])
+        exist_check = atn_db.cur.fetchone()
+        if not exist_check:
+            atn_db.cur.insert('bookmark',[None,topic_id,docno,0])
+            print("0") #do nothing in the front-end
+        else:
+            state, = exist_check
+            atn_db.cur.execute('UPDATE bookmark SET state=? WHERE topic_id=? AND docno=?',[state^1,topic_id,docno]) #toggle state between marked and unmarked
+            if state == 0: #already marked
+                print("-1") #prompt unmark message
+            else:
+                print("0")
+        atn_db.commit()
+        atn_db.close()
+        return
+
+
     # add the doc to filter_list as discarded doc
     if signal in ['r','d']:
         atn_db.cur.execute('SELECT * FROM filter_list WHERE topic_id=? AND docno=?', [topic_id, docno])
@@ -42,9 +60,10 @@ def moveHandle(form, environ):
         #corpus = ['EBOLA', 'POLAR', 'WEAPON'][domain_id-1]
         cmd = ''
         if signal == 'd': cmd = 'DUPLICATE'
+        if signal == 'r': cmd = 'IRRELAVANT'
         try: mylog.log_discard_doc(username, cmd.lower(), str(topic_id), docno)
         except: pass
-    
+
     #table = 'search_list' 
 
     #if signal == 'p':

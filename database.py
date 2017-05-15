@@ -87,7 +87,17 @@ class AtnTables:
                 create_time datetime default current_timestamp
             )
             ''',
-            # state: 1 for tagged, 2 for irrelevant, 3 for duplicate, 4 for bookmark
+            # state: 1 for tagged, 2 for irrelevant, 3 for duplicate
+
+            '''
+            bookmark(
+                id              INTEGER PRIMARY KEY,
+                topic_id        INTEGER,
+                docno           TEXT,
+                state           INTEGER
+            )
+            ''',
+            #state: 0 for marked, 1 for unmarked
 
             '''
             subtopic(

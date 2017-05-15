@@ -117,10 +117,10 @@
     font-size: 18px;
     font-family: verdana;
 }
-#docprev, #docnext, #docdup{
-    margin-right: 20px;   
+#docprev, #docnext, #docdup, #bookmark{
+    margin-right: 15px;
 }
-#docprev, #docnext, #docdiscard, #docdup{
+#docprev, #docnext, #docdiscard, #docdup,#bookmark{
     float: right;
     height: 22px;
     width: 70px;
@@ -132,7 +132,7 @@
     padding: 2px;
     font-family: verdana;
 }
-#docprev:hover, #docnext:hover, #docdiscard:hover, #docdup:hover{
+#docprev:hover, #docnext:hover, #docdiscard:hover, #docdup:hover, #bookmark:hover{
     background-color: #5CB8E6;
     color: white;
 }
