@@ -8,6 +8,7 @@
     <script>
 	domain_url = %s;
     tid = %s;
+    title = %s;
     </script>
     <script src="./js/displayList.js"></script>
 </head>
@@ -27,7 +28,8 @@
                 url: "./putbackHandler.cgi",
                 data:{
                     docid: docno,
-                    topic_id: tid
+                    topic_id: tid,
+                    title: title
                 },
                 success: function(){
                     r.closest("div").hide();

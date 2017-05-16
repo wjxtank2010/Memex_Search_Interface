@@ -52,7 +52,7 @@ def displayListHandle(form, environ):
         atn_db.cur.execute('SELECT domain_url FROM domain WHERE domain_id=?', [int(domain_id)])
         domain_url, = atn_db.cur.fetchone()
         print("Content-Type: text/html\r\n")
-        print(html.read()%("'" + domain_url + "'", topic_id, title, topic_name, title.lower(), str(number), string))
+        print(html.read()%("'" + domain_url + "'", topic_id, title, title, topic_name, title.lower(), str(number), string))
         html.close()
         atn_db.close()
 
