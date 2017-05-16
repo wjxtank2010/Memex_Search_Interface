@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import cgi, sqlite3
+import cgi, sqlite3,sys
 from database import DBHandler
 from authentication import cookieAuthentication
 from os import environ
@@ -78,7 +78,7 @@ def logHandle(form, environ):
         atn_db = DBHandler(db_path.atn)
         atn_db.cur.execute('SELECT subtopic_name FROM subtopic WHERE subtopic_id=?', [int(subtopic_id)])
         subtopic_name, = atn_db.cur.fetchone()
-        atn_db.cur.execute('UPDATE topic SET para=?,mode=?,level=? WHERE topic_id=?', [query,mode,level,int(topic_id)])
+        atn_db.cur.execute('UPDATE topic SET para=?,mode=?,level=? WHERE topic_id=?', [str(query),mode,level,int(topic_id)])
         atn_db.commit()
         try: mylog.log_findmore(username, color, topic_id, subtopic_id, subtopic_name)
         except: pass
@@ -101,5 +101,7 @@ def logHandle(form, environ):
 
     print('status: 200 OK\r\n')
 
+reload(sys)
+sys.setdefaultencoding("utf-8")
 form = cgi.FieldStorage()
 logHandle(form, environ)
