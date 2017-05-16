@@ -31,6 +31,7 @@ def displayListHandle(form, environ):
             title = "Duplicate"
         elif type == "bookmark":
             atn_db.cur.execute('SELECT docno FROM bookmark WHERE topic_id=? AND state=0', [int(topic_id)])
+            title = "Bookmarked"
 
         try: mylog.log_view_tagged_discarded_doc(username, title.lower(), topic_id)
         except: pass
