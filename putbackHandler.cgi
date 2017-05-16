@@ -18,7 +18,7 @@ def putbackHandle(form, environ):
     docno = form.getvalue("docid", None)
     title = form.getvalue("title",None)
     atn_db  = DBHandler(db_path.atn)
-    if title = "Bookmarked":
+    if title == "Bookmarked":
         atn_db.cur.execute("SELECT state FROM filter_list WHERE topic_id=? AND docno=?", [int(topic_id), docno])
         ostate, = atn_db.cur.fetchone()
         if ostate == 2: origin = 'irrelevant'
