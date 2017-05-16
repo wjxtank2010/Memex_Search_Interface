@@ -29,6 +29,9 @@ def moveHandle(form, environ):
         exist_check = atn_db.cur.fetchone()
         if not exist_check:
             atn_db.cur.insert('bookmark',[None,topic_id,docno,0])
+            a = open("bookmark.txt","w")
+            a.write(docno)
+            a.close
             print("0") #do nothing in the front-end
         else:
             state, = exist_check

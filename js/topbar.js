@@ -272,7 +272,7 @@ function move(opnum){
 	    data: {
             topic_id: tid,
             docno: doc_id, // ?? make sure set doc_id ??
-            signal: opnum,
+            signal: opnum
         },
         success: function(response){
             response = response.trim();

@@ -9,6 +9,7 @@ from elasticsearch import Elasticsearch,RequestsHttpConnection
 
 def getQuery(atn_db,topicId):
 	atn_db.cur.execute("SELECT para from topic where topic_id=?",[topicId])
+
 	para, = atn_db.cur.fetchone()
 	a = open("q.txt","w")
 	a.write(para+"\n")
