@@ -30,13 +30,17 @@ def displayListHandle(form, environ):
             atn_db.cur.execute('SELECT docno FROM filter_list WHERE topic_id=? AND state=3', [int(topic_id)])
             title = "Duplicate"
         elif type == "bookmark":
-            atn_db.cur.execute('SELECT docno FROM bookmark WHERE topic_id=? AND state=0', [int(topic_id)])
+            atn_db.cur.execute('SELECT docno FROM bookmark WHERE topic_id=? AND state=1', [int(topic_id)])
             title = "Bookmarked"
 
         try: mylog.log_view_tagged_discarded_doc(username, title.lower(), topic_id)
         except: pass
 
         results = atn_db.cur.fetchall()
+        a = open("display.txt","w")
+        a.write(str(results))
+        a.write(str(topic_id))
+        a.close()
         atn_db.cur.execute('SELECT topic_name FROM topic WHERE topic_id=?',[int(topic_id)])
         topic_name, = atn_db.cur.fetchone()
         
