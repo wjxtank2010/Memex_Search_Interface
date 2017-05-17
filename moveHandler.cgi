@@ -31,7 +31,7 @@ def moveHandle(form, environ):
             a = open("a.txt","w")
             a.write("Not exist")
             a.close()
-            atn_db.cur.insert('bookmark',[None,topic_id,docno,0])
+            atn_db.insert('bookmark',[None,topic_id,docno,0])
             a = open("bookmark.txt","w")
             a.write(docno)
             a.close
