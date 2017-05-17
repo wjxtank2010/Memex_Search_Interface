@@ -28,24 +28,17 @@ def moveHandle(form, environ):
         atn_db.cur.execute('SELECT state FROM bookmark WHERE topic_id=? AND docno=?', [topic_id, docno])
         exist_check = atn_db.cur.fetchone()
         if not exist_check:
-            a = open("a.txt","w")
-            a.write("Not exist")
-            a.close()
-            atn_db.insert('bookmark',[None,topic_id,docno,0])
-            a = open("bookmark.txt","w")
-            a.write(docno)
-            a.close
+            atn_db.insert('bookmark',[None,topic_id,docno,1])
             print("0") #do nothing in the front-end
         else:
-            a = open("b.txt","w")
-            a.write(exist_check)
-            a.close()
             state, = exist_check
-            atn_db.cur.execute('UPDATE bookmark SET state=? WHERE topic_id=? AND docno=?',[state^1,topic_id,docno]) #toggle state between marked and unmarked
-            if state == 0: #already marked
+            if state == 1: #already marked
+                state += 1
                 print("-1") #prompt unmark message
             else:
                 print("0")
+                state -= 1
+            atn_db.cur.execute('UPDATE bookmark SET state=? WHERE topic_id=? AND docno=?',[,topic_id,docno]) #toggle state between marked and unmarked
         atn_db.commit()
         atn_db.close()
         return

@@ -25,7 +25,7 @@ def putbackHandle(form, environ):
         else: origin = 'duplicate'
         atn_db.cur.execute("DELETE FROM filter_list WHERE topic_id=? AND docno=?", [int(topic_id), docno])
     else:
-        atn_db.cur.execute("UPDATE bookmark SET state=? WHERE topic_id=? AND docno=?", [1,int(topic_id),docno])
+        atn_db.cur.execute("UPDATE bookmark SET state=? WHERE topic_id=? AND docno=?", [2,int(topic_id),docno])
         origin = 'bookmark'
 
     atn_db.commit()

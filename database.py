@@ -97,7 +97,7 @@ class AtnTables:
                 state           INTEGER
             )
             ''',
-            #state: 0 for marked, 1 for unmarked
+            #state: 1 for marked, 2 for unmarked
 
             '''
             subtopic(
