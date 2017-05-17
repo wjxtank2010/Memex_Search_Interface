@@ -38,7 +38,7 @@ def moveHandle(form, environ):
             else:
                 print("0")
                 state -= 1
-            atn_db.cur.execute('UPDATE bookmark SET state=? WHERE topic_id=? AND docno=?',[,topic_id,docno]) #toggle state between marked and unmarked
+            atn_db.cur.execute('UPDATE bookmark SET state=? WHERE topic_id=? AND docno=?',[state,topic_id,docno]) #toggle state between marked and unmarked
         atn_db.commit()
         atn_db.close()
         return
